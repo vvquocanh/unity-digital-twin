@@ -74,7 +74,7 @@ namespace uPLibrary.Networking.M2Mqtt.Messages
         internal const byte MQTT_MSG_PINGREQ_FLAG_BITS = 0x00;
         internal const byte MQTT_MSG_PINGRESP_FLAG_BITS = 0x00;
         internal const byte MQTT_MSG_DISCONNECT_FLAG_BITS = 0x00;
-
+        
         // QOS levels
         public const byte QOS_LEVEL_AT_MOST_ONCE = 0x00;
         public const byte QOS_LEVEL_AT_LEAST_ONCE = 0x01;

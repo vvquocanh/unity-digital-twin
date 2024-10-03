@@ -354,6 +354,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serverMQTTSetting: {fileID: 11400000, guid: 549778a4970dbd347b0e08d8564e4bb0, type: 2}
   subscriptionSetting: {fileID: 11400000, guid: 0601c035cb5ff3b47b918149091af718, type: 2}
+  id: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

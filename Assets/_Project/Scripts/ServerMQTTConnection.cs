@@ -1,5 +1,7 @@
+using System.Collections;
 using UnityEngine;
 using uPLibrary.Networking.M2Mqtt;
+using uPLibrary.Networking.M2Mqtt.Messages;
 
 public class ServerMQTTConnection : MonoBehaviour
 {
@@ -40,7 +42,13 @@ public class ServerMQTTConnection : MonoBehaviour
     private void Subscribe()
     {
         var rc = mqttClient.Subscribe(subscriptionSetting.Topics, subscriptionSetting.QosLevel);
+        if (rc == 0) return;
 
+        mqttClient.MqttMsgPublishReceived += OnMqttMessageReceived;
+    }
+    private void OnMqttMessageReceived(object sender, MqttMsgPublishEventArgs msg)
+    {
+        Debug.Log(System.Text.Encoding.UTF8.GetString(msg.Message));
     }
 
     private void OnDestroy()
