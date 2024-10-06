@@ -1,13 +1,14 @@
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewMQTTSubscriptionSetting", menuName = "MQTT/MQTTSubscriptionSetting")]
 public class MQTTSubscriptionSetting : ScriptableObject
 {
-    [SerializeField] private string[] topics;
+    [SerializeField] private string topic;
 
-    public string[] Topics => topics;
+    public string Topic => topic;
 
-    [SerializeField] private byte[] qosLevel;
+    [SerializeField] private byte qos;
 
-    public byte[] QosLevel => qosLevel;
+    public byte Qos => qos;
 }

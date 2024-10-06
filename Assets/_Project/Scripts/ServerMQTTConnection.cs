@@ -1,4 +1,5 @@
-using System.Collections;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
@@ -8,15 +9,36 @@ public class ServerMQTTConnection : MonoBehaviour
     [Header("Setting")]
     [SerializeField] private ServerMQTTSetting serverMQTTSetting;
 
-    [SerializeField] private MQTTSubscriptionSetting subscriptionSetting;
+    [SerializeField] private List<MQTTSubscriptionSetting> subscriptionSettings;
 
     [Header("Attribute")]
     [SerializeField] private int id;
 
     private MqttClient mqttClient = null;
+
+    private List<string> topicList = new List<string>();
+
+    private List<byte> qosList = new List<byte>();
+
     private void Awake()
     {
-        mqttClient = new MqttClient(serverMQTTSetting.BrokerAddress, serverMQTTSetting.BrokerPort, false, null, null, MqttSslProtocols.None);   
+        InitMqttClient();
+
+        InitSubscriptionSetting();
+    }
+
+    private void InitMqttClient()
+    {
+        mqttClient = new MqttClient(serverMQTTSetting.BrokerAddress, serverMQTTSetting.BrokerPort, false, null, null, MqttSslProtocols.None);
+    }
+
+    private void InitSubscriptionSetting()
+    {
+        foreach (var setting in subscriptionSettings)
+        {
+            topicList.Add(setting.Topic);
+            qosList.Add(setting.Qos);
+        }
     }
     // Start is called before the first frame update
     private void Start()
@@ -41,19 +63,22 @@ public class ServerMQTTConnection : MonoBehaviour
 
     private void Subscribe()
     {
-        var rc = mqttClient.Subscribe(subscriptionSetting.Topics, subscriptionSetting.QosLevel);
-        if (rc == 0) return;
+        mqttClient.MqttMsgPublishReceived += OnPublishReceived;
+        var rc = mqttClient.Subscribe(topicList.ToArray(), qosList.ToArray());
+        if (rc != 0) return;
+        Debug.LogError("Failt to subscribe");
 
-        mqttClient.MqttMsgPublishReceived += OnMqttMessageReceived;
     }
-    private void OnMqttMessageReceived(object sender, MqttMsgPublishEventArgs msg)
+
+    private void OnPublishReceived(object sender, MqttMsgPublishEventArgs msg)
     {
         Debug.Log(System.Text.Encoding.UTF8.GetString(msg.Message));
     }
 
     private void OnDestroy()
     {
-        mqttClient.Unsubscribe(subscriptionSetting.Topics);
+        mqttClient.Unsubscribe(topicList.ToArray());
+        //mqttClient.MqttMsgPublishReceived -= OnMqttMessageReceived;
         mqttClient.Disconnect();
         Debug.Log("Disconnected from the broker.");
     }
