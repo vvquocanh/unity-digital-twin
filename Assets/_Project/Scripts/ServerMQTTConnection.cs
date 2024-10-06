@@ -20,6 +20,8 @@ public class ServerMQTTConnection : MonoBehaviour
 
     private List<byte> qosList = new List<byte>();
 
+    private Action<object, MqttMsgPublishEventArgs> onMessageReceived;
+
     private void Awake()
     {
         InitMqttClient();
@@ -36,7 +38,7 @@ public class ServerMQTTConnection : MonoBehaviour
     {
         foreach (var setting in subscriptionSettings)
         {
-            topicList.Add(setting.Topic);
+            topicList.Add(string.Concat(setting.Topic, "/#"));
             qosList.Add(setting.Qos);
         }
     }
@@ -49,7 +51,7 @@ public class ServerMQTTConnection : MonoBehaviour
 
         Subscribe();
     }
-    
+
     private int ConnectToBroker()
     {
         var clientId = string.Concat(serverMQTTSetting.ClientId, ":", id);
@@ -57,7 +59,7 @@ public class ServerMQTTConnection : MonoBehaviour
 
         if (rc == 0) Debug.Log("Connected to the broker.");
         else Debug.LogError($"Fail to connect to the broker: {rc}.");
-        
+
         return rc;
     }
 
@@ -72,14 +74,24 @@ public class ServerMQTTConnection : MonoBehaviour
 
     private void OnPublishReceived(object sender, MqttMsgPublishEventArgs msg)
     {
-        Debug.Log(System.Text.Encoding.UTF8.GetString(msg.Message));
+        onMessageReceived?.Invoke(sender, msg);
     }
 
     private void OnDestroy()
     {
         mqttClient.Unsubscribe(topicList.ToArray());
-        //mqttClient.MqttMsgPublishReceived -= OnMqttMessageReceived;
+        mqttClient.MqttMsgPublishReceived -= OnPublishReceived;
         mqttClient.Disconnect();
         Debug.Log("Disconnected from the broker.");
+    }
+
+    public void AddMessageReceivedCallback(Action<object, MqttMsgPublishEventArgs> callback)
+    {
+        onMessageReceived += callback;
+    }
+
+    public void RemoveMessageReceivedCallback(Action<object, MqttMsgPublishEventArgs> callback)
+    {
+        onMessageReceived -= callback;
     }
 }
