@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
@@ -68,7 +69,7 @@ public class ServerMQTTConnection : MonoBehaviour
         mqttClient.MqttMsgPublishReceived += OnPublishReceived;
         var rc = mqttClient.Subscribe(topicList.ToArray(), qosList.ToArray());
         if (rc != 0) return;
-        Debug.LogError("Failt to subscribe");
+        Debug.LogError("Fail to subscribe to the broker.");
 
     }
 
@@ -93,5 +94,13 @@ public class ServerMQTTConnection : MonoBehaviour
     public void RemoveMessageReceivedCallback(Action<object, MqttMsgPublishEventArgs> callback)
     {
         onMessageReceived -= callback;
+    }
+
+    public void Publish(string topic, string message, byte qos, bool retain)
+    {
+        var rc = mqttClient.Publish(topic, Encoding.ASCII.GetBytes(message), qos, retain);
+        if (rc != 0) return;
+
+        Debug.LogError($"Fail to publish with topic: {topic}");
     }
 }

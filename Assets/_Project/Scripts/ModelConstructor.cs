@@ -1,16 +1,20 @@
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UnityEngine;
 using uPLibrary.Networking.M2Mqtt.Messages;
 
 [RequireComponent(typeof(ServerMQTTConnection))]
-public class ModelConstruction : MonoBehaviour
+public class ModelConstructor : MonoBehaviour
 {
     [SerializeField] private MQTTSubscriptionSetting setting;
 
     private ServerMQTTConnection mqttConnection;
 
-    private MemoryStream memoryStream = new MemoryStream();
+    private Dictionary<int, MemoryStream> memoryStreamDict = new Dictionary<int, MemoryStream>();
+
+    private Action<int> onCarModelConstructed;
 
     private void Awake()
     {
@@ -31,7 +35,15 @@ public class ModelConstruction : MonoBehaviour
 
     private void ConstructCarModelFile(MqttMsgPublishEventArgs msg)
     {
-        var filePath = Application.dataPath + "/_Project/Models/Car.glb";
+        var topic = msg.Topic;
+
+        int id = int.Parse(topic.Substring(topic.IndexOf("/") + 1));
+
+        var filePath = Application.dataPath + "/_Project/Models/Car_"+ "_" + id + ".glb";
+
+        if (!memoryStreamDict.ContainsKey(id)) memoryStreamDict.Add(id, new MemoryStream());
+
+        var memoryStream = memoryStreamDict.GetValueOrDefault(id);
 
         if (Encoding.UTF8.GetString(msg.Message) == "EOF")
         {
@@ -40,10 +52,22 @@ public class ModelConstruction : MonoBehaviour
             using (var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
             {
                 memoryStream.WriteTo(fileStream);
-            }  
-            memoryStream.SetLength(0);
-            memoryStream.Position = 0;
+            }
+            memoryStream.Close();
+            memoryStreamDict.Remove(id);
+
+            onCarModelConstructed?.Invoke(id);
         }
         else memoryStream.Write(msg.Message, 0, msg.Message.Length);
+    }
+
+    public void AddCarModelConstructedCallback(Action<int> callback)
+    {
+        onCarModelConstructed += callback;
+    }
+
+    public void RemoveCarModelContructedCallback(Action<int> callback)
+    {
+        onCarModelConstructed -= callback;
     }
 }
