@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed450991950acf84a92ddd2c43f92361, type: 3}
   m_Name: ServerMQTTSetting
   m_EditorClassIdentifier: 
-  brokerAddress: 192.168.1.53
+  brokerAddress: 172.20.10.14
   brokerPort: 1883
   clientId: Server
   username: quanh2k
