@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9f4a80719e4a544381a3e91b4f5da22, type: 3}
   m_Name: Commands
   m_EditorClassIdentifier: 
+  setPosition: position
   changeVelocity: velocity
   changeDirection: direction
   changeStatus: status

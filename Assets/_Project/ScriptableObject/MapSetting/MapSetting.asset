@@ -14,8 +14,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settings:
   - id: 1
-    position: {x: 0, y: 0}
+    position: {x: -72.5, y: -110}
     directionAngle: 0
   - id: 2
-    position: {x: 0, y: 0}
+    position: {x: -2.5, y: -110}
     directionAngle: 0
+  - id: 3
+    position: {x: 67.5, y: -110}
+    directionAngle: 0
+  - id: 4
+    position: {x: 110, y: -72.5}
+    directionAngle: -90
+  - id: 5
+    position: {x: 110, y: -2.5}
+    directionAngle: -90
+  - id: 6
+    position: {x: -110, y: 67.5}
+    directionAngle: -90
+  - id: 7
+    position: {x: 72.5, y: 110}
+    directionAngle: 180
+  - id: 8
+    position: {x: 2.5, y: 110}
+    directionAngle: 180
+  - id: 9
+    position: {x: -67.5, y: 110}
+    directionAngle: 180
+  - id: 10
+    position: {x: -110, y: 72.5}
+    directionAngle: 90
+  - id: 11
+    position: {x: -110, y: 2.5}
+    directionAngle: 90
+  - id: 12
+    position: {x: -110, y: -67.5}
+    directionAngle: 90

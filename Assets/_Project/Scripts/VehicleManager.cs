@@ -1,4 +1,5 @@
 using GLTFast;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -11,7 +12,7 @@ public class VehicleManager : MonoBehaviour
     private enum CarStatus
     {
         Idle,
-        Runnning,
+        Running,
         Finish
     }
 
@@ -87,19 +88,24 @@ public class VehicleManager : MonoBehaviour
 
         var carParameter = GetCarParamter(carId);
 
+        var messageString = Encoding.UTF8.GetString(message);
+
         switch (preTopic)
         {
             case "model":
                 ConstructCarModelFile(carId, message); 
                 break;
             case "acceleration":
-                SetAcceleration(carParameter, Encoding.UTF8.GetString(message));
+                SetAcceleration(carParameter, messageString);
                 break;
             case "gate":
-                SetGate(carParameter, Encoding.UTF8.GetString(message));
+                SetGate(carParameter, messageString);
                 break;
             case "ready":
-                SetReady(carParameter, Encoding.UTF8.GetString(message));
+                SetReady(carParameter, messageString);
+                break;
+            default:
+                Debug.LogError($"Unrecognize topic: {preTopic}");
                 break;
         }
     }
@@ -186,62 +192,69 @@ public class VehicleManager : MonoBehaviour
             return;
         }
 
-        var newCar = InitCarObject(carParameter.id, position, directionAngle);
-        InstantiateCarModel(carParameter.id, newCar);
+        var newCar = InitCarObject(carParameter, position, directionAngle);
+        InstantiateCarModel(newCar);
     }
 
-    private Car InitCarObject(int id, Vector2 position, float directionAngle)
+    private Car InitCarObject(CarParamter carParameter, Vector2 position, float directionAngle)
     {
-        var newGameobject = new GameObject($"Car_{id}");
+        var newGameobject = new GameObject($"Car_{carParameter.id}");
         newGameobject.transform.position = new Vector3(position.x, 0.2f, position.y);
         newGameobject.transform.eulerAngles = new Vector3(0, directionAngle, 0);
 
         var newCar = newGameobject.AddComponent<Car>();
+        newCar.Id = carParameter.id;
+        newCar.Acceleration = carParameter.acceleration;
 
         return newCar;
     }
 
-    private async void InstantiateCarModel(int id, Car newCar)
+    private async void InstantiateCarModel(Car newCar)
     {
-        var filePath = carFilePath + id + ".glb";
+        var filePath = carFilePath + newCar.Id + ".glb";
         var gltf = new GltfImport();
 
         if (!await gltf.Load(filePath))
         {
-            Debug.LogError($"Fail to load car model file: {id}.");
+            Debug.LogError($"Fail to load car model file: {newCar.Id}.");
             return;
         }
 
-        if (!await gltf.InstantiateMainSceneAsync(newCar.transform)) Debug.LogError($"Fail to instantiate car instance: {id}.");
+        if (!await gltf.InstantiateMainSceneAsync(newCar.transform)) Debug.LogError($"Fail to instantiate car instance: {newCar.Id}.");
 
-        AddCarToManagementData(id, newCar);
+        AddCarToManagementData(newCar);
 
-        InitCarState(id);
+        InitCarState(newCar);
     }
 
-    private void AddCarToManagementData(int id, Car newCar)
+    private void AddCarToManagementData(Car newCar)
     {
-        if (carDict.ContainsKey(id)) carDict.Remove(id);
+        if (carDict.ContainsKey(newCar.Id)) carDict.Remove(newCar.Id);
 
-        carDict.Add(id, newCar);
+        carDict.Add(newCar.Id, newCar);
 
-        var existedCarInTheList = carList.Find((car) => car.Id == id);
+        var existedCarInTheList = carList.Find((car) => car.Id == newCar.Id);
 
         if (existedCarInTheList != null) carList.Remove(existedCarInTheList);
         
         carList.Add(newCar);
     }
 
-    private void InitCarState(int id)
+    private void InitCarState(Car car)
     {
-        GiveChangeDirectionCommand(id, new Vector2(1, 0));
-        GiveChangeVelocityCommand(id, 10);
-        GiveChangeStatusCommand(id, CarStatus.Runnning);
+        SetPositionCommand(car.Id, new Vector2(car.transform.position.x, car.transform.position.z));
+        GiveChangeDirectionCommand(car.Id, AngleToVector(car.transform.eulerAngles.y));
+        GiveChangeVelocityCommand(car.Id, 10);
+        GiveChangeStatusCommand(car.Id, CarStatus.Running);
     }
 
-    private void ProcessPosition(string postTopic, byte[] message)
+    private void SetPositionCommand(int carId, Vector2 position)
     {
+        string topic = publishSetting.Topic + "/" + commands.SetPosition + "/" + carId;
 
+        string message = position.x + "/" + position.y;
+
+        mqttConnection.Publish(topic, message, publishSetting.Qos, publishSetting.Retain);
     }
 
     private void GiveChangeVelocityCommand(int carId, float desiredVelocity)
@@ -257,7 +270,7 @@ public class VehicleManager : MonoBehaviour
     {
         string topic = publishSetting.Topic + "/" + commands.ChangeDirection + "/" + carId;
 
-        string message = desiredDirection.x + "_" + desiredDirection.y;
+        string message = desiredDirection.x + "/" + desiredDirection.y;
 
         mqttConnection.Publish(topic, message, publishSetting.Qos, publishSetting.Retain);
     }
@@ -266,8 +279,79 @@ public class VehicleManager : MonoBehaviour
     {
         string topic = publishSetting.Topic + "/" + commands.ChangeDirection + "/" + carId;
 
-        string message = status.ToString();
+        int enumInt = (int)status;
+        string message = enumInt.ToString();
 
         mqttConnection.Publish(topic, message, publishSetting.Qos, publishSetting.Retain);
+    }
+
+    private void ProcessPosition(string topic, byte[] message)
+    {
+        ProcessTopic(topic, out var preTopic, out var postTopic);
+
+        var carId = int.Parse(postTopic);
+
+        bool isCarExist = carDict.TryGetValue(carId, out var car);
+        if (!isCarExist) return;
+
+        var messageString = Encoding.UTF8.GetString(message);
+
+        switch (topic)
+        {
+            case "position":
+                SetPosition(car, messageString);
+                break;
+            case "direction":
+                SetDirection(car, messageString);
+                break;
+            case "velocity":
+                SetVelocity(car, messageString);
+                break;
+            default:
+                Debug.LogError($"Unrecognize topic: {preTopic}");
+                break;
+
+        }
+    }
+
+    private void SetPosition(Car car, string message)
+    {
+        var delimiterIndex = message.IndexOf("/");
+        float x = float.Parse(message[..delimiterIndex]);
+        float z = float.Parse(message[(delimiterIndex + 1)..]);
+        
+        car.transform.position = new Vector3(x, car.transform.position.y, z);
+    }
+
+    private void SetDirection(Car car, string message)
+    {
+        var delimiterIndex = message.IndexOf("/");
+        float x = float.Parse(message[..delimiterIndex]);
+        float z = float.Parse(message[(delimiterIndex + 1)..]);
+
+        float angle = VectorToAngle(new Vector2(x, z));
+
+        car.transform.eulerAngles = new Vector3(car.transform.eulerAngles.x, angle, car.transform.eulerAngles.z);
+    }
+
+    private void SetVelocity(Car car, string message)
+    {
+        var velocity = float.Parse(message);
+        car.Velocity = velocity;
+    }
+
+    private Vector2 AngleToVector(float angle)
+    {
+        float x = (float)Math.Round(Mathf.Cos(angle * Mathf.Deg2Rad), 3);
+        float y = (float)Math.Round(Mathf.Sin(angle * Mathf.Deg2Rad), 3);
+
+        return new Vector2(x, y);
+    }
+
+    private float VectorToAngle(Vector2 vector)
+    {
+        float radians = (float)Mathf.Atan2(vector.y, vector.x);
+
+        return radians * Mathf.Rad2Deg;
     }
 }

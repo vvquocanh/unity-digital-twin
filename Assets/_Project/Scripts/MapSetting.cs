@@ -23,7 +23,7 @@ public class MapSetting : ScriptableObject
 
     [SerializeField] private List<GateSetting> settings;
 
-    private Dictionary<int, GateSetting> gateDict;
+    private Dictionary<int, GateSetting> gateDict = new Dictionary<int, GateSetting>();
 
     public bool GetGateSetting(int id, out Vector2 position, out float direction)
     {
@@ -31,7 +31,7 @@ public class MapSetting : ScriptableObject
         {
             foreach (var setting in settings)
             {
-                gateDict.Add(id, setting);
+                gateDict.Add(setting.Id, setting);
             }
         }
 
