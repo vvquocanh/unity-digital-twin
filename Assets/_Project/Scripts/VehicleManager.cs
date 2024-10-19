@@ -10,9 +10,9 @@ public class VehicleManager : MonoBehaviour
 {
     private enum CarStatus
     {
-        Idle = 0,
-        Runnning = 1,
-        Finish = 2
+        Idle,
+        Runnning,
+        Finish
     }
 
     private class CarParamter
@@ -39,11 +39,13 @@ public class VehicleManager : MonoBehaviour
 
     [SerializeField] private MQTTSubscriptionSetting positionSubscriptionSetting;
 
+    [SerializeField] private MapSetting mapSetting;
+
     private Dictionary<int, MemoryStream> memoryStreamDict = new Dictionary<int, MemoryStream>();
 
     private Dictionary<int, Car> carDict = new Dictionary<int, Car>();
 
-    private List<Car> carList;
+    private List<Car> carList = new List<Car>() ;
 
     private List<CarParamter> waitingCarList = new List<CarParamter>();
 
@@ -54,6 +56,11 @@ public class VehicleManager : MonoBehaviour
     private void Awake()
     {
         mqttConnection = GetComponent<ServerMQTTConnection>();
+    }
+
+    private void Start()
+    {
+        mqttConnection.AddMessageReceivedCallback(OnMessageReceived);
     }
 
     private void OnMessageReceived(object sender, MqttMsgPublishEventArgs message)
@@ -82,16 +89,16 @@ public class VehicleManager : MonoBehaviour
 
         switch (preTopic)
         {
-            case "Model":
+            case "model":
                 ConstructCarModelFile(carId, message); 
                 break;
-            case "Acceleration":
+            case "acceleration":
                 SetAcceleration(carParameter, Encoding.UTF8.GetString(message));
                 break;
-            case "Gate":
+            case "gate":
                 SetGate(carParameter, Encoding.UTF8.GetString(message));
                 break;
-            case "Ready":
+            case "ready":
                 SetReady(carParameter, Encoding.UTF8.GetString(message));
                 break;
         }
@@ -162,19 +169,33 @@ public class VehicleManager : MonoBehaviour
         for (int i = waitingCarList.Count - 1; i >= 0; i--)
         {
             if (!waitingCarList[i].ready) continue;
-            
-            int id = waitingCarList[i].id;
-            
-            var newCar = InitCarObject(id);
-            InstantiateCarModel(id, newCar);
+
+            TryCreateCar(waitingCarList[i]);
 
             waitingCarList.RemoveAt(i);
         }
     }
 
-    private Car InitCarObject(int id)
+    private void TryCreateCar(CarParamter carParameter)
+    {
+        bool isGettingGateSuccess = mapSetting.GetGateSetting(carParameter.gate, out var position, out var directionAngle);
+
+        if (!isGettingGateSuccess)
+        {
+            Debug.LogError($"Fail to get gate from car: {carParameter.id}");
+            return;
+        }
+
+        var newCar = InitCarObject(carParameter.id, position, directionAngle);
+        InstantiateCarModel(carParameter.id, newCar);
+    }
+
+    private Car InitCarObject(int id, Vector2 position, float directionAngle)
     {
         var newGameobject = new GameObject($"Car_{id}");
+        newGameobject.transform.position = new Vector3(position.x, 0.2f, position.y);
+        newGameobject.transform.eulerAngles = new Vector3(0, directionAngle, 0);
+
         var newCar = newGameobject.AddComponent<Car>();
 
         return newCar;
@@ -245,7 +266,7 @@ public class VehicleManager : MonoBehaviour
     {
         string topic = publishSetting.Topic + "/" + commands.ChangeDirection + "/" + carId;
 
-        string message = ((int)status).ToString();
+        string message = status.ToString();
 
         mqttConnection.Publish(topic, message, publishSetting.Qos, publishSetting.Retain);
     }

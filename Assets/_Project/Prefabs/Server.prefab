@@ -66,3 +66,4 @@ MonoBehaviour:
   publishSetting: {fileID: 11400000, guid: 41ff5ecba199ecf4285efbb9d7a38103, type: 2}
   registrationSubscriptionSetting: {fileID: 11400000, guid: 0601c035cb5ff3b47b918149091af718, type: 2}
   positionSubscriptionSetting: {fileID: 11400000, guid: 7606064c90f1b6444948fedde194b313, type: 2}
+  mapSetting: {fileID: 11400000, guid: 44b4555c822d1ad408d560764f6f128b, type: 2}

@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed450991950acf84a92ddd2c43f92361, type: 3}
-  m_Name: ServerMQTTSetting
+  m_Script: {fileID: 11500000, guid: 08ba5b86af440b04da94ccaadbf74ac7, type: 3}
+  m_Name: MapSetting
   m_EditorClassIdentifier: 
-  brokerAddress: 192.168.1.13
-  brokerPort: 1883
-  clientId: Server
-  username: quanh2k
-  password: Quocanh01
-  cleanSession: 1
-  aliveTime: 10
+  settings:
+  - id: 1
+    position: {x: 0, y: 0}
+    directionAngle: 0
+  - id: 2
+    position: {x: 0, y: 0}
+    directionAngle: 0
