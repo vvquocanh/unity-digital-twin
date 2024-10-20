@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   setPosition: position
   changeVelocity: velocity
+  setDirection: set_direction
   changeDirection: direction
   changeStatus: status

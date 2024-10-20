@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Car : MonoBehaviour
 {
@@ -26,10 +27,26 @@ public class Car : MonoBehaviour
         set => velocity = Mathf.Max(0f, value);
     }
 
-    private Vector2 direction;
+    float directionAngle;
 
-    public Vector2 Direction {
-        get => direction;
-        set => direction = value;
+    public float DirectionAngle
+    {
+        set => directionAngle = value;
+    }
+
+    private Vector2 position;
+
+    public Vector2 Position
+    {
+        set => position = value;
+    }
+
+
+    public void UpdateCarData()
+    {
+        transform.position = new Vector3(position.x, transform.position.y, position.y);
+        if (Mathf.Abs(transform.eulerAngles.y - directionAngle) < 0.001f) return;
+
+        transform.eulerAngles = new Vector3(transform.eulerAngles.x, directionAngle, transform.eulerAngles.z);
     }
 }

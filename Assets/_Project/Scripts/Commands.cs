@@ -11,6 +11,11 @@ public class Commands : ScriptableObject
     
     public string ChangeVelocity => changeVelocity;
 
+    [SerializeField] private string setDirection;
+
+    public string SetDirection => setDirection;
+
+
     [SerializeField] private string changeDirection;
 
     public string ChangeDirection => changeDirection;

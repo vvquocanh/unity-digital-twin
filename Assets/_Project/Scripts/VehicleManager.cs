@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UnityEngine;
+using UnityEngine.UIElements;
 using uPLibrary.Networking.M2Mqtt.Messages;
 
 [RequireComponent(typeof(ServerMQTTConnection))]
@@ -53,6 +54,8 @@ public class VehicleManager : MonoBehaviour
     private ServerMQTTConnection mqttConnection;
 
     private string carFilePath = Application.dataPath + "/_Project/Models/Car_";
+
+    private float rotationOffset = -90;
 
     private void Awake()
     {
@@ -166,6 +169,16 @@ public class VehicleManager : MonoBehaviour
     private void Update()
     {
         CheckForUninstantiatedCars();
+
+        UpdateCar();
+    }
+
+    private void UpdateCar()
+    {
+        foreach (var car in carList)
+        {
+            car.UpdateCarData();
+        }
     }
 
     private void CheckForUninstantiatedCars()
@@ -193,18 +206,21 @@ public class VehicleManager : MonoBehaviour
         }
 
         var newCar = InitCarObject(carParameter, position, directionAngle);
+
         InstantiateCarModel(newCar);
     }
 
     private Car InitCarObject(CarParamter carParameter, Vector2 position, float directionAngle)
     {
         var newGameobject = new GameObject($"Car_{carParameter.id}");
-        newGameobject.transform.position = new Vector3(position.x, 0.2f, position.y);
-        newGameobject.transform.eulerAngles = new Vector3(0, directionAngle, 0);
 
         var newCar = newGameobject.AddComponent<Car>();
         newCar.Id = carParameter.id;
         newCar.Acceleration = carParameter.acceleration;
+        newCar.DirectionAngle = directionAngle;
+        newCar.Position = position;
+        newCar.transform.position = new Vector3(position.x, 0.2f, position.y);
+        newCar.transform.eulerAngles = new Vector3(0, directionAngle, 0);
 
         return newCar;
     }
@@ -243,7 +259,7 @@ public class VehicleManager : MonoBehaviour
     private void InitCarState(Car car)
     {
         SetPositionCommand(car.Id, new Vector2(car.transform.position.x, car.transform.position.z));
-        GiveChangeDirectionCommand(car.Id, AngleToVector(car.transform.eulerAngles.y));
+        GiveSetDirectionCommand(car.Id, AngleToVector(car.transform.eulerAngles.y));
         GiveChangeVelocityCommand(car.Id, 10);
         GiveChangeStatusCommand(car.Id, CarStatus.Running);
     }
@@ -266,6 +282,15 @@ public class VehicleManager : MonoBehaviour
         mqttConnection.Publish(topic, message, publishSetting.Qos, publishSetting.Retain);
     }
 
+    private void GiveSetDirectionCommand(int carId, Vector2 desiredDirection)
+    {
+        string topic = publishSetting.Topic + "/" + commands.SetDirection + "/" + carId;
+
+        string message = desiredDirection.x + "/" + desiredDirection.y;
+
+        mqttConnection.Publish(topic, message, publishSetting.Qos, publishSetting.Retain);
+    }
+
     private void GiveChangeDirectionCommand(int carId, Vector2 desiredDirection)
     {
         string topic = publishSetting.Topic + "/" + commands.ChangeDirection + "/" + carId;
@@ -277,7 +302,7 @@ public class VehicleManager : MonoBehaviour
 
     private void GiveChangeStatusCommand(int carId, CarStatus status)
     {
-        string topic = publishSetting.Topic + "/" + commands.ChangeDirection + "/" + carId;
+        string topic = publishSetting.Topic + "/" + commands.ChangeStatus + "/" + carId;
 
         int enumInt = (int)status;
         string message = enumInt.ToString();
@@ -296,7 +321,7 @@ public class VehicleManager : MonoBehaviour
 
         var messageString = Encoding.UTF8.GetString(message);
 
-        switch (topic)
+        switch (preTopic)
         {
             case "position":
                 SetPosition(car, messageString);
@@ -319,8 +344,8 @@ public class VehicleManager : MonoBehaviour
         var delimiterIndex = message.IndexOf("/");
         float x = float.Parse(message[..delimiterIndex]);
         float z = float.Parse(message[(delimiterIndex + 1)..]);
-        
-        car.transform.position = new Vector3(x, car.transform.position.y, z);
+
+        car.Position = new Vector2(x, z);
     }
 
     private void SetDirection(Car car, string message)
@@ -331,7 +356,7 @@ public class VehicleManager : MonoBehaviour
 
         float angle = VectorToAngle(new Vector2(x, z));
 
-        car.transform.eulerAngles = new Vector3(car.transform.eulerAngles.x, angle, car.transform.eulerAngles.z);
+        car.DirectionAngle = angle;
     }
 
     private void SetVelocity(Car car, string message)
@@ -342,6 +367,8 @@ public class VehicleManager : MonoBehaviour
 
     private Vector2 AngleToVector(float angle)
     {
+        angle += rotationOffset;
+        
         float x = (float)Math.Round(Mathf.Cos(angle * Mathf.Deg2Rad), 3);
         float y = (float)Math.Round(Mathf.Sin(angle * Mathf.Deg2Rad), 3);
 
@@ -352,6 +379,6 @@ public class VehicleManager : MonoBehaviour
     {
         float radians = (float)Mathf.Atan2(vector.y, vector.x);
 
-        return radians * Mathf.Rad2Deg;
+        return radians * Mathf.Rad2Deg + rotationOffset;
     }
 }

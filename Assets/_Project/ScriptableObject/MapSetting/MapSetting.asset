@@ -29,7 +29,7 @@ MonoBehaviour:
     position: {x: 110, y: -2.5}
     directionAngle: -90
   - id: 6
-    position: {x: -110, y: 67.5}
+    position: {x: 110, y: 67.5}
     directionAngle: -90
   - id: 7
     position: {x: 72.5, y: 110}
