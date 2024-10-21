@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UnityEngine;
-using UnityEngine.UIElements;
 using uPLibrary.Networking.M2Mqtt.Messages;
 
 [RequireComponent(typeof(ServerMQTTConnection))]
@@ -21,14 +20,18 @@ public class VehicleManager : MonoBehaviour
     {
         public int id;
         public float acceleration;
-        public int gate;
+        public float modelRotationOffset;
+        public int startGate;
+        public int endGate;
         public bool ready;
 
         public CarParamter (int id)
         {
             this.id = id;
             acceleration = 0;
-            gate = 0;
+            modelRotationOffset = 0;
+            startGate = 0;
+            endGate = 0;
             ready = false;
         }
     }
@@ -54,8 +57,6 @@ public class VehicleManager : MonoBehaviour
     private ServerMQTTConnection mqttConnection;
 
     private string carFilePath = Application.dataPath + "/_Project/Models/Car_";
-
-    private float rotationOffset = -90;
 
     private void Awake()
     {
@@ -98,11 +99,17 @@ public class VehicleManager : MonoBehaviour
             case "model":
                 ConstructCarModelFile(carId, message); 
                 break;
+            case "rotation_offset":
+                SetModelRotationOffset(carParameter, messageString);
+                break;
             case "acceleration":
                 SetAcceleration(carParameter, messageString);
                 break;
-            case "gate":
-                SetGate(carParameter, messageString);
+            case "start_gate":
+                SetStartGate(carParameter, messageString);
+                break;
+            case "end_gate":
+                SetEndGate(carParameter, messageString);
                 break;
             case "ready":
                 SetReady(carParameter, messageString);
@@ -148,16 +155,28 @@ public class VehicleManager : MonoBehaviour
         else memoryStream.Write(message, 0, message.Length);
     }
 
+    private void SetModelRotationOffset(CarParamter carParamter, string message) 
+    {
+        var rotationOffset = float.Parse(message);
+        carParamter.modelRotationOffset = rotationOffset;
+    }
+
     private void SetAcceleration(CarParamter carParamter, string message) 
     {
         var acceleration = float.Parse(message);
         carParamter.acceleration = acceleration;
     }
 
-    private void SetGate(CarParamter carParamter, string message)
+    private void SetStartGate(CarParamter carParamter, string message)
     {
         var gate = int.Parse(message);
-        carParamter.gate = gate;
+        carParamter.startGate = gate;
+    }
+
+    private void SetEndGate(CarParamter carParamter, string message)
+    {
+        var gate = int.Parse(message);
+        carParamter.endGate = gate;
     }
 
     private void SetReady(CarParamter carParamter, string message)
@@ -197,7 +216,7 @@ public class VehicleManager : MonoBehaviour
 
     private void TryCreateCar(CarParamter carParameter)
     {
-        bool isGettingGateSuccess = mapSetting.GetGateSetting(carParameter.gate, out var position, out var directionAngle);
+        bool isGettingGateSuccess = mapSetting.GetGateSetting(carParameter.startGate, out var position, out var directionAngle);
 
         if (!isGettingGateSuccess)
         {
@@ -219,6 +238,7 @@ public class VehicleManager : MonoBehaviour
         newCar.Acceleration = carParameter.acceleration;
         newCar.DirectionAngle = directionAngle;
         newCar.Position = position;
+        newCar.ModelRotationOffset = carParameter.modelRotationOffset;
         newCar.transform.position = new Vector3(position.x, 0.2f, position.y);
         newCar.transform.eulerAngles = new Vector3(0, directionAngle, 0);
 
@@ -259,7 +279,7 @@ public class VehicleManager : MonoBehaviour
     private void InitCarState(Car car)
     {
         SetPositionCommand(car.Id, new Vector2(car.transform.position.x, car.transform.position.z));
-        GiveSetDirectionCommand(car.Id, AngleToVector(car.transform.eulerAngles.y));
+        GiveSetDirectionCommand(car.Id, AngleToVector(car.transform.eulerAngles.y, car.ModelRotationOffset));
         GiveChangeVelocityCommand(car.Id, 10);
         GiveChangeStatusCommand(car.Id, CarStatus.Running);
     }
@@ -354,7 +374,7 @@ public class VehicleManager : MonoBehaviour
         float x = float.Parse(message[..delimiterIndex]);
         float z = float.Parse(message[(delimiterIndex + 1)..]);
 
-        float angle = VectorToAngle(new Vector2(x, z));
+        float angle = VectorToAngle(new Vector2(x, z), car.ModelRotationOffset);
 
         car.DirectionAngle = angle;
     }
@@ -365,7 +385,7 @@ public class VehicleManager : MonoBehaviour
         car.Velocity = velocity;
     }
 
-    private Vector2 AngleToVector(float angle)
+    private Vector2 AngleToVector(float angle, float rotationOffset)
     {
         angle += rotationOffset;
         
@@ -375,10 +395,10 @@ public class VehicleManager : MonoBehaviour
         return new Vector2(x, y);
     }
 
-    private float VectorToAngle(Vector2 vector)
+    private float VectorToAngle(Vector2 vector, float rotationOffset)
     {
         float radians = (float)Mathf.Atan2(vector.y, vector.x);
 
-        return radians * Mathf.Rad2Deg + rotationOffset;
+        return radians * Mathf.Rad2Deg - rotationOffset;
     }
 }

@@ -41,6 +41,13 @@ public class Car : MonoBehaviour
         set => position = value;
     }
 
+    private float modelRotationOffset;
+
+    public float ModelRotationOffset
+    {
+        set => modelRotationOffset = value;
+        get => modelRotationOffset;
+    }
 
     public void UpdateCarData()
     {
