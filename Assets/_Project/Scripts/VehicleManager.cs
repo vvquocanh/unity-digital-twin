@@ -308,6 +308,8 @@ public class VehicleManager : MonoBehaviour
 
         string message = desiredDirection.x + "/" + desiredDirection.y;
 
+        Debug.Log(message);
+
         mqttConnection.Publish(topic, message, publishSetting.Qos, publishSetting.Retain);
     }
 
@@ -390,7 +392,7 @@ public class VehicleManager : MonoBehaviour
         angle += rotationOffset;
         
         float x = (float)Math.Round(Mathf.Cos(angle * Mathf.Deg2Rad), 3);
-        float y = (float)Math.Round(Mathf.Sin(angle * Mathf.Deg2Rad), 3);
+        float y = (float)Math.Round(Mathf.Sin(-angle * Mathf.Deg2Rad), 3);
 
         return new Vector2(x, y);
     }
