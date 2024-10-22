@@ -1,23 +1,14 @@
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Car : MonoBehaviour
 {
     private int id;
 
-    public int Id
-    {
-        get => id;
-        set => id = value;
-    }
+    public int Id => id;
 
     private float acceleration = 0f;
 
-    public float Acceleration 
-    {
-        get => acceleration;
-        set => acceleration = Mathf.Max(0f, value);
-    }
+    public float Acceleration => acceleration;
 
     private float velocity = 0f;
 
@@ -27,7 +18,7 @@ public class Car : MonoBehaviour
         set => velocity = Mathf.Max(0f, value);
     }
 
-    float directionAngle;
+    private float directionAngle;
 
     public float DirectionAngle
     {
@@ -38,15 +29,34 @@ public class Car : MonoBehaviour
 
     public Vector2 Position
     {
+        get => position;
         set => position = value;
     }
 
     private float modelRotationOffset;
 
-    public float ModelRotationOffset
+    public float ModelRotationOffset => modelRotationOffset;
+
+    private void Start()
     {
-        set => modelRotationOffset = value;
-        get => modelRotationOffset;
+        gameObject.layer = LayerMask.NameToLayer("Car");
+
+        var collider = gameObject.AddComponent<BoxCollider>();
+        collider.isTrigger = true;
+
+        var rigidBody = gameObject.AddComponent<Rigidbody>();
+        rigidBody.isKinematic = true;
+    }
+
+    public void InitializeCar(int id, float acceleration, float modelRotationOffset, float directionAngle, Vector2 position)
+    {
+        this.id = id;
+        this.acceleration = acceleration;
+        this.directionAngle = directionAngle;
+        this.position = position;
+        this.modelRotationOffset = modelRotationOffset;
+        transform.position = new Vector3(position.x, transform.position.y, position.y);
+        transform.eulerAngles = new Vector3(0, directionAngle, 0);
     }
 
     public void UpdateCarData()

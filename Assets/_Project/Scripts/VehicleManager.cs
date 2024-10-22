@@ -234,13 +234,7 @@ public class VehicleManager : MonoBehaviour
         var newGameobject = new GameObject($"Car_{carParameter.id}");
 
         var newCar = newGameobject.AddComponent<Car>();
-        newCar.Id = carParameter.id;
-        newCar.Acceleration = carParameter.acceleration;
-        newCar.DirectionAngle = directionAngle;
-        newCar.Position = position;
-        newCar.ModelRotationOffset = carParameter.modelRotationOffset;
-        newCar.transform.position = new Vector3(position.x, 0.2f, position.y);
-        newCar.transform.eulerAngles = new Vector3(0, directionAngle, 0);
+        newCar.InitializeCar(carParameter.id, carParameter.acceleration, carParameter.modelRotationOffset, directionAngle, position);
 
         return newCar;
     }
@@ -307,8 +301,6 @@ public class VehicleManager : MonoBehaviour
         string topic = publishSetting.Topic + "/" + commands.SetDirection + "/" + carId;
 
         string message = desiredDirection.x + "/" + desiredDirection.y;
-
-        Debug.Log(message);
 
         mqttConnection.Publish(topic, message, publishSetting.Qos, publishSetting.Retain);
     }
