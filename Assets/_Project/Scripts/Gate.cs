@@ -1,8 +1,12 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "MQTT/EndPoint/Gate", fileName = "NewGate")]
-public class Gate : EndPoint
+[CreateAssetMenu(menuName = "MQTT/Gate", fileName = "NewGate")]
+public class Gate : ScriptableObject
 {
+    [SerializeField] private int id;
+
+    public int Id => id;
+
     [SerializeField] private Vector2 position;
 
     public Vector2 Position => position;
@@ -10,9 +14,4 @@ public class Gate : EndPoint
     [SerializeField] private float directionAngle;
 
     public float DirectionAngle => directionAngle;
-
-    public override bool IsDestination(int checkId)
-    {
-        return id == checkId;
-    }
 }

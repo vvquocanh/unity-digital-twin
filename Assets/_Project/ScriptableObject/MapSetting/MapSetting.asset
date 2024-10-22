@@ -12,40 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08ba5b86af440b04da94ccaadbf74ac7, type: 3}
   m_Name: MapSetting
   m_EditorClassIdentifier: 
-  settings:
-  - id: 1
-    position: {x: -72.5, y: -110}
-    directionAngle: 0
-  - id: 2
-    position: {x: -2.5, y: -110}
-    directionAngle: 0
-  - id: 3
-    position: {x: 67.5, y: -110}
-    directionAngle: 0
-  - id: 4
-    position: {x: 110, y: -72.5}
-    directionAngle: -90
-  - id: 5
-    position: {x: 110, y: -2.5}
-    directionAngle: -90
-  - id: 6
-    position: {x: 110, y: 67.5}
-    directionAngle: -90
-  - id: 7
-    position: {x: 72.5, y: 110}
-    directionAngle: 180
-  - id: 8
-    position: {x: 2.5, y: 110}
-    directionAngle: 180
-  - id: 9
-    position: {x: -67.5, y: 110}
-    directionAngle: 180
-  - id: 10
-    position: {x: -110, y: 72.5}
-    directionAngle: 90
-  - id: 11
-    position: {x: -110, y: 2.5}
-    directionAngle: 90
-  - id: 12
-    position: {x: -110, y: -67.5}
-    directionAngle: 90
+  gateList:
+  - {fileID: 11400000, guid: 3db5794054aafe54ebb2769f5c3ab3d8, type: 2}
+  - {fileID: 11400000, guid: d12e9fc919c97f1449eefcd2a7fd5e69, type: 2}
+  - {fileID: 11400000, guid: 64f064835dde79d4ea5b8f634bd1f5a6, type: 2}
+  - {fileID: 11400000, guid: 3e373f489eaa50a44bd033f3a6b99cb4, type: 2}
+  - {fileID: 11400000, guid: 281498d0577816a4e93e532ab2ad1dad, type: 2}
+  - {fileID: 11400000, guid: 2f51c182a959ec84284cb61d46a50075, type: 2}
+  - {fileID: 11400000, guid: e2468614734fa274da591c36905b3f6e, type: 2}
+  - {fileID: 11400000, guid: b890fd3a8a736a64993ce4277703b602, type: 2}
+  - {fileID: 11400000, guid: bb2ca9065e5f2f045bbbf1b7bb356383, type: 2}
+  - {fileID: 11400000, guid: 5555bef78dfa61d4da793086ffc30705, type: 2}
+  - {fileID: 11400000, guid: c9de2177c528b3942865ee19c85154a3, type: 2}
+  - {fileID: 11400000, guid: 47653fab1f358544690492632950db61, type: 2}

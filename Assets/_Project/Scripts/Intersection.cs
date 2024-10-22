@@ -1,12 +1,12 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "MQTT/EndPoint/Intersection", fileName = "NewIntersection")]
-public class Intersection : EndPoint
+public class Intersection : MonoBehaviour
 {
-
-    public override bool IsDestination(int checkId)
+    public enum Direction
     {
-        return false;
+        Left,
+        Right,
+        Straight
     }
 }
 

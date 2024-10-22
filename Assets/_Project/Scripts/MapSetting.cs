@@ -5,33 +5,17 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "MQTT/MapSetting", fileName = "NewMapSetting")]
 public class MapSetting : ScriptableObject
 {
-    [Serializable]
-    private struct GateSetting
-    {
-        [SerializeField] private int id;
+    [SerializeField] private List<Gate> gateList;
 
-        public int Id => id;
-
-        [SerializeField] private Vector2 position;
-
-        public Vector2 Position => position;
-
-        [SerializeField] private float directionAngle;
-
-        public float DirectionAngle => directionAngle;
-    }
-
-    [SerializeField] private List<GateSetting> settings;
-
-    private Dictionary<int, GateSetting> gateDict = new Dictionary<int, GateSetting>();
+    private Dictionary<int, Gate> gateDict = new Dictionary<int, Gate>();
 
     public bool GetGateSetting(int id, out Vector2 position, out float direction)
     {
         if (gateDict == null || gateDict.Count == 0)
         {
-            foreach (var setting in settings)
+            foreach (Gate gate in gateList)
             {
-                gateDict.Add(setting.Id, setting);
+                gateDict.Add(gate.Id, gate);
             }
         }
 
