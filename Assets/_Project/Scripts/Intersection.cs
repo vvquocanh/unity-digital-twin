@@ -24,7 +24,7 @@ public class Intersection : MonoBehaviour
     }
 
     [Serializable]
-    private struct AdjacentIntersectionPoint
+    public struct AdjacentIntersectionPoint
     {
         [SerializeField] private Direction direction;
 
@@ -39,7 +39,7 @@ public class Intersection : MonoBehaviour
 
     [SerializeField] private List<AdjacentIntersectionPoint> adjacentIntersectionPoints = new List<AdjacentIntersectionPoint>();
 
-    private Action<int, HashSet<Direction>> onCarEnterIntersection;
+    private Action<int, HashSet<Direction>, List<AdjacentIntersectionPoint>> onCarEnterIntersection;
     private void OnTriggerEnter(Collider other)
     {
         if (!other.TryGetComponent<Car>(out var car))
@@ -55,20 +55,20 @@ public class Intersection : MonoBehaviour
             if (adjacentGate.Gate.Id != car.Id) availableDirections.Remove(adjacentGate.Direction);
             else
             {
-                onCarEnterIntersection?.Invoke(car.Id, new HashSet<Direction> { adjacentGate.Direction });
+                onCarEnterIntersection?.Invoke(car.Id, new HashSet<Direction> { adjacentGate.Direction }, adjacentIntersectionPoints);
                 return;
             }
         }
 
-        onCarEnterIntersection?.Invoke(car.Id, availableDirections);
+        onCarEnterIntersection?.Invoke(car.Id, availableDirections, adjacentIntersectionPoints);
     }
 
-    public void SubscribeCarEnterIntersection(Action<int, HashSet<Direction>> onCarEnterIntersection)
+    public void SubscribeCarEnterIntersection(Action<int, HashSet<Direction>, List<AdjacentIntersectionPoint>> onCarEnterIntersection)
     {
         this.onCarEnterIntersection += onCarEnterIntersection;
     }
 
-    public void UnsubscribeCarEnterIntersection(Action<int, HashSet<Direction>> onCarEnterIntersection)
+    public void UnsubscribeCarEnterIntersection(Action<int, HashSet<Direction>, List<AdjacentIntersectionPoint>> onCarEnterIntersection)
     {
         this.onCarEnterIntersection -= onCarEnterIntersection;
     }

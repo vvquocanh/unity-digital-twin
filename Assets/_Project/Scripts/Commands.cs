@@ -16,6 +16,10 @@ public class Commands : ScriptableObject
 
     public string ChangeDirection => changeDirection;
 
+    [SerializeField] private string setNextIntersection;
+
+    public string SetNextIntersection => setNextIntersection;
+
     [SerializeField] private string changeStatus;
 
     public string ChangeStatus => changeStatus;

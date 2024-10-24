@@ -9,15 +9,17 @@ using uPLibrary.Networking.M2Mqtt.Messages;
 
 using Random = UnityEngine.Random;
 using Direction = Intersection.Direction;
+using static Intersection;
 
 [RequireComponent(typeof(ServerMQTTConnection))]
 public class VehicleManager : MonoBehaviour
 {
     private enum CarStatus
     {
-        Idle,
-        Running,
-        Finish
+        Idle = 0,
+        Running = 1,
+        Waiting = 2,
+        Finish = 3
     }
 
     private class CarParamter
@@ -220,7 +222,7 @@ public class VehicleManager : MonoBehaviour
 
     private void TryCreateCar(CarParamter carParameter)
     {
-        bool isGettingGateSuccess = mapSetting.GetGateSetting(carParameter.startGate, out var position, out var directionAngle);
+        bool isGettingGateSuccess = mapSetting.GetGateSetting(carParameter.startGate, out var gate);
 
         if (!isGettingGateSuccess)
         {
@@ -228,17 +230,17 @@ public class VehicleManager : MonoBehaviour
             return;
         }
 
-        var newCar = InitCarObject(carParameter, position, directionAngle);
+        var newCar = InitCarObject(carParameter, gate.Position, gate.DirectionAngle, carParameter.startGate, carParameter.endGate);
 
         InstantiateCarModel(newCar);
     }
 
-    private Car InitCarObject(CarParamter carParameter, Vector2 position, float directionAngle)
+    private Car InitCarObject(CarParamter carParameter, Vector2 position, float directionAngle, int startGate, int endGate)
     {
         var newGameobject = new GameObject($"Car_{carParameter.id}");
 
         var newCar = newGameobject.AddComponent<Car>();
-        newCar.InitializeCar(carParameter.id, carParameter.modelRotationOffset, directionAngle, position);
+        newCar.InitializeCar(carParameter.id, carParameter.modelRotationOffset, directionAngle, position, startGate, endGate);
 
         return newCar;
     }
@@ -276,7 +278,16 @@ public class VehicleManager : MonoBehaviour
 
     private void InitCarState(Car car)
     {
+        bool isGettingGateSuccess = mapSetting.GetGateSetting(car.StartGate, out var gate);
+
+        if (!isGettingGateSuccess)
+        {
+            Debug.LogError($"Fail to get gate from car: {car.Id}");
+            return;
+        }
+
         SetPositionCommand(car.Id, new Vector2(car.transform.position.x, car.transform.position.z));
+        GiveSetNextIntersectionCommand(car.Id, gate.AdjacentIntersectionPoint.Coordination);
         GiveSetDirectionCommand(car.Id, AngleToVector(car.transform.eulerAngles.y, car.ModelRotationOffset));
         GiveChangeStatusCommand(car.Id, CarStatus.Running);
     }
@@ -304,6 +315,15 @@ public class VehicleManager : MonoBehaviour
         string topic = publishSetting.Topic + "/" + commands.ChangeDirection + "/" + carId;
 
         string message = desiredDirection.x + "/" + desiredDirection.y;
+
+        mqttConnection.Publish(topic, message, publishSetting.Qos, publishSetting.Retain);
+    }
+
+    private void GiveSetNextIntersectionCommand(int carId, Vector2 nextIntersection)
+    {
+        string topic = publishSetting.Topic + "/" + commands.SetNextIntersection + "/" + carId;
+
+        string message = nextIntersection.x + "/" + nextIntersection.y;
 
         mqttConnection.Publish(topic, message, publishSetting.Qos, publishSetting.Retain);
     }
@@ -390,7 +410,7 @@ public class VehicleManager : MonoBehaviour
         return -(radians * Mathf.Rad2Deg) - rotationOffset;
     }
 
-    private void OnIntersectionEnter(int carId, HashSet<Direction> availableDirections)
+    private void OnIntersectionEnter(int carId, HashSet<Direction> availableDirections, List<AdjacentIntersectionPoint> adjacentIntersectionPoints)
     {
         var isCarExist = carDict.TryGetValue(carId, out var car);
         if (!isCarExist)
@@ -402,20 +422,15 @@ public class VehicleManager : MonoBehaviour
         int random = Random.Range(0, availableDirections.Count);
 
         var direction = availableDirections.ToArray()[random];
-
-        float newRotation;
-
-        switch (direction)
+        var newRotation = direction switch
         {
-            case Direction.Left:
-                newRotation = car.transform.localEulerAngles.y - 90;
-                GiveChangeDirectionCommand(carId, AngleToVector(newRotation, car.ModelRotationOffset));
-                break;
-            case Direction.Right:
-                newRotation = car.transform.localEulerAngles.y + 90;
-                GiveChangeDirectionCommand(carId, AngleToVector(newRotation, car.ModelRotationOffset));
-                break;
-
-        }
+            Direction.Left => car.transform.localEulerAngles.y - 90,
+            Direction.Right => car.transform.localEulerAngles.y + 90,
+            Direction.Straight => car.transform.localEulerAngles.y,
+            _ => car.transform.localEulerAngles.y,
+        };
+        var nextIntersectionPoint = adjacentIntersectionPoints.Find((point) => point.Direction == direction).IntersectionPoint.Coordination;
+        GiveSetNextIntersectionCommand(carId, nextIntersectionPoint);
+        GiveChangeDirectionCommand(carId, AngleToVector(newRotation, car.ModelRotationOffset));
     }
 }

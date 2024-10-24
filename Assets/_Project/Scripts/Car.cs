@@ -33,6 +33,14 @@ public class Car : MonoBehaviour
 
     public float ModelRotationOffset => modelRotationOffset;
 
+    private int startGate;
+
+    public int StartGate => startGate;
+
+    private int endGate;
+
+    public int EndGate => endGate;
+
     private void Start()
     {
         gameObject.layer = LayerMask.NameToLayer("Car");
@@ -44,12 +52,14 @@ public class Car : MonoBehaviour
         rigidBody.isKinematic = true;
     }
 
-    public void InitializeCar(int id, float modelRotationOffset, float directionAngle, Vector2 position)
+    public void InitializeCar(int id, float modelRotationOffset, float directionAngle, Vector2 position, int startGate, int endGate)
     {
         this.id = id;
         this.directionAngle = directionAngle;
         this.position = position;
         this.modelRotationOffset = modelRotationOffset;
+        this.startGate = startGate;
+        this.endGate = endGate;
         transform.position = new Vector3(position.x, 0.2f, position.y);
         transform.eulerAngles = new Vector3(0, directionAngle, 0);
     }

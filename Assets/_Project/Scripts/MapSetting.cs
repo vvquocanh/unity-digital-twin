@@ -9,7 +9,7 @@ public class MapSetting : ScriptableObject
 
     private Dictionary<int, Gate> gateDict = new Dictionary<int, Gate>();
 
-    public bool GetGateSetting(int id, out Vector2 position, out float direction)
+    public bool GetGateSetting(int id, out Gate gateSetting)
     {
         if (gateDict == null || gateDict.Count == 0)
         {
@@ -19,10 +19,7 @@ public class MapSetting : ScriptableObject
             }
         }
 
-        var isGettingGateSuccess = gateDict.TryGetValue(id, out var gateSetting);
-
-        position = isGettingGateSuccess ? gateSetting.Position : Vector2.zero;
-        direction = isGettingGateSuccess ? gateSetting.DirectionAngle : 0f;
+        var isGettingGateSuccess = gateDict.TryGetValue(id, out gateSetting);
 
         return isGettingGateSuccess;
     }
