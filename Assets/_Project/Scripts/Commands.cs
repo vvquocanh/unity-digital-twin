@@ -7,10 +7,6 @@ public class Commands : ScriptableObject
 
     public string SetPosition => setPosition;
 
-    [SerializeField] private string changeVelocity;
-    
-    public string ChangeVelocity => changeVelocity;
-
     [SerializeField] private string setDirection;
 
     public string SetDirection => setDirection;

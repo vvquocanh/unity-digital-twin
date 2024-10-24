@@ -14,4 +14,8 @@ public class Gate : ScriptableObject
     [SerializeField] private float directionAngle;
 
     public float DirectionAngle => directionAngle;
+
+    [SerializeField] private IntersectionPoint adjacentIntersectionPoint;
+
+    public IntersectionPoint AdjacentIntersectionPoint => adjacentIntersectionPoint;
 }

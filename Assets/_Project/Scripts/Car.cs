@@ -6,10 +6,6 @@ public class Car : MonoBehaviour
 
     public int Id => id;
 
-    private float acceleration = 0f;
-
-    public float Acceleration => acceleration;
-
     private float velocity = 0f;
 
     public float Velocity
@@ -48,14 +44,13 @@ public class Car : MonoBehaviour
         rigidBody.isKinematic = true;
     }
 
-    public void InitializeCar(int id, float acceleration, float modelRotationOffset, float directionAngle, Vector2 position)
+    public void InitializeCar(int id, float modelRotationOffset, float directionAngle, Vector2 position)
     {
         this.id = id;
-        this.acceleration = acceleration;
         this.directionAngle = directionAngle;
         this.position = position;
         this.modelRotationOffset = modelRotationOffset;
-        transform.position = new Vector3(position.x, transform.position.y, position.y);
+        transform.position = new Vector3(position.x, 0.2f, position.y);
         transform.eulerAngles = new Vector3(0, directionAngle, 0);
     }
 

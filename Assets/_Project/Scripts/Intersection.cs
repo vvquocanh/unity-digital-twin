@@ -23,9 +23,23 @@ public class Intersection : MonoBehaviour
         public Gate Gate => gate;
     }
 
+    [Serializable]
+    private struct AdjacentIntersectionPoint
+    {
+        [SerializeField] private Direction direction;
+
+        public Direction Direction => direction;
+
+        [SerializeField] private IntersectionPoint intersectionPoint;
+
+        public IntersectionPoint IntersectionPoint => intersectionPoint;
+    }
+
     [SerializeField] private List<AdjacentGate> adjacentGates = new List<AdjacentGate>();
 
-    private Action<HashSet<Direction>> onCarEnterIntersection;
+    [SerializeField] private List<AdjacentIntersectionPoint> adjacentIntersectionPoints = new List<AdjacentIntersectionPoint>();
+
+    private Action<int, HashSet<Direction>> onCarEnterIntersection;
     private void OnTriggerEnter(Collider other)
     {
         if (!other.TryGetComponent<Car>(out var car))
@@ -41,20 +55,20 @@ public class Intersection : MonoBehaviour
             if (adjacentGate.Gate.Id != car.Id) availableDirections.Remove(adjacentGate.Direction);
             else
             {
-                onCarEnterIntersection?.Invoke(new HashSet<Direction> { adjacentGate.Direction });
+                onCarEnterIntersection?.Invoke(car.Id, new HashSet<Direction> { adjacentGate.Direction });
                 return;
             }
         }
 
-        onCarEnterIntersection?.Invoke(availableDirections);
+        onCarEnterIntersection?.Invoke(car.Id, availableDirections);
     }
 
-    public void SubscribeCarEnterIntersection(Action<HashSet<Direction>> onCarEnterIntersection)
+    public void SubscribeCarEnterIntersection(Action<int, HashSet<Direction>> onCarEnterIntersection)
     {
         this.onCarEnterIntersection += onCarEnterIntersection;
     }
 
-    public void UnsubscribeCarEnterIntersection(Action<HashSet<Direction>> onCarEnterIntersection)
+    public void UnsubscribeCarEnterIntersection(Action<int, HashSet<Direction>> onCarEnterIntersection)
     {
         this.onCarEnterIntersection -= onCarEnterIntersection;
     }
