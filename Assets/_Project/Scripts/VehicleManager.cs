@@ -464,6 +464,7 @@ public class VehicleManager : MonoBehaviour
 
     private void OnIntersectionEnter(int carId, HashSet<Direction> availableDirections, List<AdjacentIntersectionPoint> adjacentIntersectionPoints)
     {
+        Debug.Log("Give command");
         var isCarExist = carDict.TryGetValue(carId, out var car);
         if (!isCarExist)
         {
@@ -484,6 +485,7 @@ public class VehicleManager : MonoBehaviour
         var nextIntersectionPoint = adjacentIntersectionPoints.Find((point) => point.Direction == direction).IntersectionPoint.Coordination;
         GiveSetNextIntersectionCommand(carId, nextIntersectionPoint);
         GiveChangeDirectionCommand(carId, AngleToVector(newRotation, car.ModelRotationOffset));
+        GiveChangeStatusCommand(carId, CarStatus.Running);
     }
 
     private void OnCarReachTheEnd(Car car)

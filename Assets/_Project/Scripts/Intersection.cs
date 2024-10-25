@@ -52,7 +52,7 @@ public class Intersection : MonoBehaviour
 
         foreach (AdjacentGate adjacentGate in adjacentGates)
         {
-            if (adjacentGate.Gate.Id != car.Id) availableDirections.Remove(adjacentGate.Direction);
+            if (adjacentGate.Gate.Id != car.EndGate) availableDirections.Remove(adjacentGate.Direction);
             else
             {
                 onCarEnterIntersection?.Invoke(car.Id, new HashSet<Direction> { adjacentGate.Direction }, adjacentIntersectionPoints);
