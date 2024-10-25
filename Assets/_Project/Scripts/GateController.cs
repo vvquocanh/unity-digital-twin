@@ -1,18 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GateController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Gate gate;
+
+    public Gate Gate => gate;
+
+    private bool isSlotAvailable = true;
+
+    public bool IsSlotAvailable => isSlotAvailable;
+
+    private void OnTriggerExit(Collider other)
     {
-        
+        isSlotAvailable = true;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OccupySlot()
     {
-        
+        isSlotAvailable = false;
     }
 }

@@ -304,10 +304,22 @@ PrefabInstance:
       propertyPath: m_text
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 3845182149646172789, guid: 8f20fec739342d84a9869d7c810ebcc1, type: 3}
+      propertyPath: gate
+      value: 
+      objectReference: {fileID: 11400000, guid: bb2ca9065e5f2f045bbbf1b7bb356383, type: 2}
     - target: {fileID: 7270789378752775283, guid: 8f20fec739342d84a9869d7c810ebcc1, type: 3}
       propertyPath: m_Name
       value: Tunnel Reverse 9
       objectReference: {fileID: 0}
+    - target: {fileID: 7543528363504095886, guid: 8f20fec739342d84a9869d7c810ebcc1, type: 3}
+      propertyPath: id
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7543528363504095886, guid: 8f20fec739342d84a9869d7c810ebcc1, type: 3}
+      propertyPath: gate
+      value: 
+      objectReference: {fileID: 11400000, guid: bb2ca9065e5f2f045bbbf1b7bb356383, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -467,6 +479,18 @@ PrefabInstance:
       propertyPath: m_text
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4336573743453527374, guid: 982f9310d166f9f4eaeb65561ed4b228, type: 3}
+      propertyPath: gate
+      value: 
+      objectReference: {fileID: 11400000, guid: 64f064835dde79d4ea5b8f634bd1f5a6, type: 2}
+    - target: {fileID: 7051987245443501493, guid: 982f9310d166f9f4eaeb65561ed4b228, type: 3}
+      propertyPath: id
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7051987245443501493, guid: 982f9310d166f9f4eaeb65561ed4b228, type: 3}
+      propertyPath: gate
+      value: 
+      objectReference: {fileID: 11400000, guid: 64f064835dde79d4ea5b8f634bd1f5a6, type: 2}
     - target: {fileID: 7896295001863101256, guid: 982f9310d166f9f4eaeb65561ed4b228, type: 3}
       propertyPath: m_Name
       value: Tunnel 3
@@ -771,10 +795,22 @@ PrefabInstance:
       propertyPath: m_text
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 3845182149646172789, guid: 8f20fec739342d84a9869d7c810ebcc1, type: 3}
+      propertyPath: gate
+      value: 
+      objectReference: {fileID: 11400000, guid: c9de2177c528b3942865ee19c85154a3, type: 2}
     - target: {fileID: 7270789378752775283, guid: 8f20fec739342d84a9869d7c810ebcc1, type: 3}
       propertyPath: m_Name
       value: Tunnel Reverse 11
       objectReference: {fileID: 0}
+    - target: {fileID: 7543528363504095886, guid: 8f20fec739342d84a9869d7c810ebcc1, type: 3}
+      propertyPath: id
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 7543528363504095886, guid: 8f20fec739342d84a9869d7c810ebcc1, type: 3}
+      propertyPath: gate
+      value: 
+      objectReference: {fileID: 11400000, guid: c9de2177c528b3942865ee19c85154a3, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -810,7 +846,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 64f064835dde79d4ea5b8f634bd1f5a6, type: 2}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].direction
@@ -821,6 +857,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].direction
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: 2ea5d30ab0219f34f8a38cc1c1f377b5, type: 2}
@@ -828,6 +868,10 @@ PrefabInstance:
       propertyPath: adjacentIntersectionPoints.Array.data[1].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: 46112143b8db80448bbc6d8049e2d75d, type: 2}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: af533dedc0747ff4f97eb63fc4f24878, type: 2}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentGates.Array.size
       value: 2
@@ -850,12 +894,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[1].direction
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].direction
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: 2ea5d30ab0219f34f8a38cc1c1f377b5, type: 2}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[1].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: bc721e4397292a149b349f0534fae6dc, type: 2}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: af533dedc0747ff4f97eb63fc4f24878, type: 2}
     - target: {fileID: 9204958402607546768, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: m_LocalPosition.x
       value: 70
@@ -932,11 +992,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[1].direction
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].direction
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].intersectionPoint
@@ -946,6 +1010,10 @@ PrefabInstance:
       propertyPath: adjacentIntersectionPoints.Array.data[1].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: 2ae70f62333989244a7a75de2720697f, type: 2}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: 4fbbc29d207b8e54992f054c5c979f3a, type: 2}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentGates.Array.size
       value: 2
@@ -968,16 +1036,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].direction
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[1].direction
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].direction
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: 4e964ea79d3db604c867ebd1dae105c5, type: 2}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[1].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: 4fbbc29d207b8e54992f054c5c979f3a, type: 2}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: c3e597c6fd2b73d47a4cc85188617e0b, type: 2}
     - target: {fileID: 9204958402607546768, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: m_LocalPosition.x
       value: 70
@@ -1054,11 +1138,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[1].direction
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].direction
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].intersectionPoint
@@ -1068,6 +1156,10 @@ PrefabInstance:
       propertyPath: adjacentIntersectionPoints.Array.data[1].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: 4e964ea79d3db604c867ebd1dae105c5, type: 2}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: ad89b82b1a7c0f54087396127ecc5f38, type: 2}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentGates.Array.size
       value: 2
@@ -1090,16 +1182,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].direction
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[1].direction
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].direction
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: 55be24d9ba79def46906a755afa7d251, type: 2}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[1].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: 82ab4d18008bd9647b007232f98c3b8b, type: 2}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: ad89b82b1a7c0f54087396127ecc5f38, type: 2}
     - target: {fileID: 9204958402607546768, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: m_LocalPosition.x
       value: -70
@@ -1326,6 +1434,18 @@ PrefabInstance:
       propertyPath: m_text
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4336573743453527374, guid: 982f9310d166f9f4eaeb65561ed4b228, type: 3}
+      propertyPath: gate
+      value: 
+      objectReference: {fileID: 11400000, guid: d12e9fc919c97f1449eefcd2a7fd5e69, type: 2}
+    - target: {fileID: 7051987245443501493, guid: 982f9310d166f9f4eaeb65561ed4b228, type: 3}
+      propertyPath: id
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7051987245443501493, guid: 982f9310d166f9f4eaeb65561ed4b228, type: 3}
+      propertyPath: gate
+      value: 
+      objectReference: {fileID: 11400000, guid: d12e9fc919c97f1449eefcd2a7fd5e69, type: 2}
     - target: {fileID: 7896295001863101256, guid: 982f9310d166f9f4eaeb65561ed4b228, type: 3}
       propertyPath: m_Name
       value: Tunnel 2
@@ -1457,6 +1577,18 @@ PrefabInstance:
       propertyPath: m_text
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 4336573743453527374, guid: 982f9310d166f9f4eaeb65561ed4b228, type: 3}
+      propertyPath: gate
+      value: 
+      objectReference: {fileID: 11400000, guid: 3e373f489eaa50a44bd033f3a6b99cb4, type: 2}
+    - target: {fileID: 7051987245443501493, guid: 982f9310d166f9f4eaeb65561ed4b228, type: 3}
+      propertyPath: id
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7051987245443501493, guid: 982f9310d166f9f4eaeb65561ed4b228, type: 3}
+      propertyPath: gate
+      value: 
+      objectReference: {fileID: 11400000, guid: 3e373f489eaa50a44bd033f3a6b99cb4, type: 2}
     - target: {fileID: 7896295001863101256, guid: 982f9310d166f9f4eaeb65561ed4b228, type: 3}
       propertyPath: m_Name
       value: Tunnel 4
@@ -1562,11 +1694,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[1].direction
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].direction
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].intersectionPoint
@@ -1576,6 +1712,10 @@ PrefabInstance:
       propertyPath: adjacentIntersectionPoints.Array.data[1].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: e72e8b289caa44944971c0e2e5598589, type: 2}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: cf2b789c89b8d304da80258701369851, type: 2}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.size
       value: 3
@@ -1734,7 +1874,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: d12e9fc919c97f1449eefcd2a7fd5e69, type: 2}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].direction
@@ -1745,6 +1885,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].direction
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: fb1182262b655134698fa1d65a64d09f, type: 2}
@@ -1752,6 +1896,10 @@ PrefabInstance:
       propertyPath: adjacentIntersectionPoints.Array.data[1].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: 79fc4354f059fce45bf4ae1e28ea2f13, type: 2}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: f1846666cdf366b40b5d7bb3a8106157, type: 2}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentGates.Array.size
       value: 1
@@ -1766,11 +1914,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[1].direction
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].direction
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].intersectionPoint
@@ -1780,6 +1932,10 @@ PrefabInstance:
       propertyPath: adjacentIntersectionPoints.Array.data[1].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: 570f7774130e44445a062f047757617c, type: 2}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: f1846666cdf366b40b5d7bb3a8106157, type: 2}
     - target: {fileID: 9204958402607546768, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1944,10 +2100,22 @@ PrefabInstance:
       propertyPath: m_text
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 3845182149646172789, guid: 8f20fec739342d84a9869d7c810ebcc1, type: 3}
+      propertyPath: gate
+      value: 
+      objectReference: {fileID: 11400000, guid: 47653fab1f358544690492632950db61, type: 2}
     - target: {fileID: 7270789378752775283, guid: 8f20fec739342d84a9869d7c810ebcc1, type: 3}
       propertyPath: m_Name
       value: Tunnel Reverse 12
       objectReference: {fileID: 0}
+    - target: {fileID: 7543528363504095886, guid: 8f20fec739342d84a9869d7c810ebcc1, type: 3}
+      propertyPath: id
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7543528363504095886, guid: 8f20fec739342d84a9869d7c810ebcc1, type: 3}
+      propertyPath: gate
+      value: 
+      objectReference: {fileID: 11400000, guid: 47653fab1f358544690492632950db61, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1997,11 +2165,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].direction
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].direction
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].intersectionPoint
@@ -2011,6 +2183,10 @@ PrefabInstance:
       propertyPath: adjacentIntersectionPoints.Array.data[1].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: c6fd7a0e6c3365b4b8516b7f4394ab9e, type: 2}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: cf2b789c89b8d304da80258701369851, type: 2}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentGates.Array.size
       value: 1
@@ -2021,7 +2197,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: c9de2177c528b3942865ee19c85154a3, type: 2}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].direction
@@ -2032,6 +2208,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].direction
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: e72e8b289caa44944971c0e2e5598589, type: 2}
@@ -2039,6 +2219,10 @@ PrefabInstance:
       propertyPath: adjacentIntersectionPoints.Array.data[1].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: c6fd7a0e6c3365b4b8516b7f4394ab9e, type: 2}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: cf2b789c89b8d304da80258701369851, type: 2}
     - target: {fileID: 9204958402607546768, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: m_LocalPosition.x
       value: -70
@@ -2141,10 +2325,22 @@ PrefabInstance:
       propertyPath: m_text
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 3845182149646172789, guid: 8f20fec739342d84a9869d7c810ebcc1, type: 3}
+      propertyPath: gate
+      value: 
+      objectReference: {fileID: 11400000, guid: b890fd3a8a736a64993ce4277703b602, type: 2}
     - target: {fileID: 7270789378752775283, guid: 8f20fec739342d84a9869d7c810ebcc1, type: 3}
       propertyPath: m_Name
       value: Tunnel Reverse 8
       objectReference: {fileID: 0}
+    - target: {fileID: 7543528363504095886, guid: 8f20fec739342d84a9869d7c810ebcc1, type: 3}
+      propertyPath: id
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7543528363504095886, guid: 8f20fec739342d84a9869d7c810ebcc1, type: 3}
+      propertyPath: gate
+      value: 
+      objectReference: {fileID: 11400000, guid: b890fd3a8a736a64993ce4277703b602, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2180,7 +2376,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 2f51c182a959ec84284cb61d46a50075, type: 2}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].direction
@@ -2191,6 +2387,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].direction
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: 4e964ea79d3db604c867ebd1dae105c5, type: 2}
@@ -2198,6 +2398,10 @@ PrefabInstance:
       propertyPath: adjacentIntersectionPoints.Array.data[1].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: 2ae70f62333989244a7a75de2720697f, type: 2}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: c3e597c6fd2b73d47a4cc85188617e0b, type: 2}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentGates.Array.size
       value: 2
@@ -2220,12 +2424,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[1].direction
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].direction
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: 2ae70f62333989244a7a75de2720697f, type: 2}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[1].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: 4fbbc29d207b8e54992f054c5c979f3a, type: 2}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: c3e597c6fd2b73d47a4cc85188617e0b, type: 2}
     - target: {fileID: 9204958402607546768, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: m_LocalPosition.x
       value: 70
@@ -2340,11 +2560,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[1].direction
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].direction
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].intersectionPoint
@@ -2354,6 +2578,10 @@ PrefabInstance:
       propertyPath: adjacentIntersectionPoints.Array.data[1].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: fb1182262b655134698fa1d65a64d09f, type: 2}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: f1846666cdf366b40b5d7bb3a8106157, type: 2}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.size
       value: 3
@@ -2607,11 +2835,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[1].direction
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].direction
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].intersectionPoint
@@ -2621,6 +2853,10 @@ PrefabInstance:
       propertyPath: adjacentIntersectionPoints.Array.data[1].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: 5210d5acb977bb942ac92ba3b5d0bd61, type: 2}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: 2244af3270e25a848b7887b97382be72, type: 2}
     - target: {fileID: 9204958402607546768, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: m_LocalPosition.x
       value: 70
@@ -2851,11 +3087,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].direction
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].direction
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].intersectionPoint
@@ -2865,6 +3105,10 @@ PrefabInstance:
       propertyPath: adjacentIntersectionPoints.Array.data[1].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: d9ac2013974ca574f97964ebac7b1770, type: 2}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: fecd54e2bc0b08c4986405ae61d14b89, type: 2}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentGates.Array.size
       value: 1
@@ -2875,7 +3119,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: b890fd3a8a736a64993ce4277703b602, type: 2}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].direction
@@ -2886,6 +3130,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].direction
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: 82601c30770b3ce42802c6f621e4318f, type: 2}
@@ -2893,6 +3141,10 @@ PrefabInstance:
       propertyPath: adjacentIntersectionPoints.Array.data[1].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: d9ac2013974ca574f97964ebac7b1770, type: 2}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: fecd54e2bc0b08c4986405ae61d14b89, type: 2}
     - target: {fileID: 9204958402607546768, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3008,12 +3260,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].direction
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[1].direction
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].direction
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[0].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: 94ca6186fb5b9d14b9e6741400e637c4, type: 2}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[1].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: 35b6868272f5ef04182c06f5cc5375e6, type: 2}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: a125bddd96e984c498df7250a5bb9682, type: 2}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentGates.Array.size
       value: 1
@@ -3028,7 +3300,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[1].direction
@@ -3046,6 +3318,10 @@ PrefabInstance:
       propertyPath: adjacentIntersectionPoints.Array.data[1].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: bec35ae9717e8394b845d53d763475d6, type: 2}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: a125bddd96e984c498df7250a5bb9682, type: 2}
     - target: {fileID: 9204958402607546768, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: m_LocalPosition.x
       value: -70
@@ -3148,6 +3424,18 @@ PrefabInstance:
       propertyPath: m_text
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 4336573743453527374, guid: 982f9310d166f9f4eaeb65561ed4b228, type: 3}
+      propertyPath: gate
+      value: 
+      objectReference: {fileID: 11400000, guid: 281498d0577816a4e93e532ab2ad1dad, type: 2}
+    - target: {fileID: 7051987245443501493, guid: 982f9310d166f9f4eaeb65561ed4b228, type: 3}
+      propertyPath: id
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7051987245443501493, guid: 982f9310d166f9f4eaeb65561ed4b228, type: 3}
+      propertyPath: gate
+      value: 
+      objectReference: {fileID: 11400000, guid: 281498d0577816a4e93e532ab2ad1dad, type: 2}
     - target: {fileID: 7896295001863101256, guid: 982f9310d166f9f4eaeb65561ed4b228, type: 3}
       propertyPath: m_Name
       value: Tunnel 5
@@ -3292,7 +3580,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 281498d0577816a4e93e532ab2ad1dad, type: 2}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].direction
@@ -3303,6 +3591,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].direction
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: 5210d5acb977bb942ac92ba3b5d0bd61, type: 2}
@@ -3310,6 +3602,10 @@ PrefabInstance:
       propertyPath: adjacentIntersectionPoints.Array.data[1].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: 31588082923af9c44bfe4d882f4b1346, type: 2}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: 2244af3270e25a848b7887b97382be72, type: 2}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentGates.Array.size
       value: 1
@@ -3324,11 +3620,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[1].direction
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].direction
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].intersectionPoint
@@ -3338,6 +3638,10 @@ PrefabInstance:
       propertyPath: adjacentIntersectionPoints.Array.data[1].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: 1ebdc0041611e6b4392c3f1112a5e599, type: 2}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: 2244af3270e25a848b7887b97382be72, type: 2}
     - target: {fileID: 9204958402607546768, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: m_LocalPosition.x
       value: 70
@@ -3422,12 +3726,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[1].direction
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].direction
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: 6f787609ab55ab74785087d66a9181d0, type: 2}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[1].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: ad89b82b1a7c0f54087396127ecc5f38, type: 2}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: 82ab4d18008bd9647b007232f98c3b8b, type: 2}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentGates.Array.size
       value: 1
@@ -3438,7 +3758,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: bb2ca9065e5f2f045bbbf1b7bb356383, type: 2}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].direction
@@ -3449,6 +3769,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].direction
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: 55be24d9ba79def46906a755afa7d251, type: 2}
@@ -3456,6 +3780,10 @@ PrefabInstance:
       propertyPath: adjacentIntersectionPoints.Array.data[1].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: 6f787609ab55ab74785087d66a9181d0, type: 2}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: 82ab4d18008bd9647b007232f98c3b8b, type: 2}
     - target: {fileID: 9204958402607546768, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: m_LocalPosition.x
       value: -70
@@ -3558,6 +3886,18 @@ PrefabInstance:
       propertyPath: m_text
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 4336573743453527374, guid: 982f9310d166f9f4eaeb65561ed4b228, type: 3}
+      propertyPath: gate
+      value: 
+      objectReference: {fileID: 11400000, guid: 2f51c182a959ec84284cb61d46a50075, type: 2}
+    - target: {fileID: 7051987245443501493, guid: 982f9310d166f9f4eaeb65561ed4b228, type: 3}
+      propertyPath: id
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7051987245443501493, guid: 982f9310d166f9f4eaeb65561ed4b228, type: 3}
+      propertyPath: gate
+      value: 
+      objectReference: {fileID: 11400000, guid: 2f51c182a959ec84284cb61d46a50075, type: 2}
     - target: {fileID: 7896295001863101256, guid: 982f9310d166f9f4eaeb65561ed4b228, type: 3}
       propertyPath: m_Name
       value: Tunnel 6
@@ -3782,11 +4122,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[1].direction
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].direction
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].intersectionPoint
@@ -3796,6 +4140,10 @@ PrefabInstance:
       propertyPath: adjacentIntersectionPoints.Array.data[1].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: 82601c30770b3ce42802c6f621e4318f, type: 2}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: fecd54e2bc0b08c4986405ae61d14b89, type: 2}
     - target: {fileID: 9204958402607546768, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3938,16 +4286,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].direction
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[1].direction
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].direction
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: 46112143b8db80448bbc6d8049e2d75d, type: 2}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[1].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: af533dedc0747ff4f97eb63fc4f24878, type: 2}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: bc721e4397292a149b349f0534fae6dc, type: 2}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentGates.Array.size
       value: 1
@@ -3962,7 +4326,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].direction
@@ -3973,6 +4337,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].direction
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: 46112143b8db80448bbc6d8049e2d75d, type: 2}
@@ -3980,6 +4348,10 @@ PrefabInstance:
       propertyPath: adjacentIntersectionPoints.Array.data[1].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: 2ea5d30ab0219f34f8a38cc1c1f377b5, type: 2}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: bc721e4397292a149b349f0534fae6dc, type: 2}
     - target: {fileID: 9204958402607546768, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: m_LocalPosition.x
       value: 70
@@ -4064,12 +4436,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[1].direction
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].direction
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: bec35ae9717e8394b845d53d763475d6, type: 2}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[1].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: a125bddd96e984c498df7250a5bb9682, type: 2}
+    - target: {fileID: 5635243246546908408, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: 35b6868272f5ef04182c06f5cc5375e6, type: 2}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentGates.Array.size
       value: 1
@@ -4080,7 +4468,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 47653fab1f358544690492632950db61, type: 2}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].direction
@@ -4091,6 +4479,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].direction
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: adjacentIntersectionPoints.Array.data[0].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: 94ca6186fb5b9d14b9e6741400e637c4, type: 2}
@@ -4098,6 +4490,10 @@ PrefabInstance:
       propertyPath: adjacentIntersectionPoints.Array.data[1].intersectionPoint
       value: 
       objectReference: {fileID: 11400000, guid: bec35ae9717e8394b845d53d763475d6, type: 2}
+    - target: {fileID: 5768172284306916028, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
+      propertyPath: adjacentIntersectionPoints.Array.data[2].intersectionPoint
+      value: 
+      objectReference: {fileID: 11400000, guid: 35b6868272f5ef04182c06f5cc5375e6, type: 2}
     - target: {fileID: 9204958402607546768, guid: 5d8cb5dd797c4544ea0734e424495709, type: 3}
       propertyPath: m_LocalPosition.x
       value: -70
@@ -4200,10 +4596,22 @@ PrefabInstance:
       propertyPath: m_text
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 3845182149646172789, guid: 8f20fec739342d84a9869d7c810ebcc1, type: 3}
+      propertyPath: gate
+      value: 
+      objectReference: {fileID: 11400000, guid: 5555bef78dfa61d4da793086ffc30705, type: 2}
     - target: {fileID: 7270789378752775283, guid: 8f20fec739342d84a9869d7c810ebcc1, type: 3}
       propertyPath: m_Name
       value: Tunnel Reverse 10
       objectReference: {fileID: 0}
+    - target: {fileID: 7543528363504095886, guid: 8f20fec739342d84a9869d7c810ebcc1, type: 3}
+      propertyPath: id
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7543528363504095886, guid: 8f20fec739342d84a9869d7c810ebcc1, type: 3}
+      propertyPath: gate
+      value: 
+      objectReference: {fileID: 11400000, guid: 5555bef78dfa61d4da793086ffc30705, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4366,10 +4774,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3845182149646172789, guid: 8f20fec739342d84a9869d7c810ebcc1, type: 3}
+      propertyPath: gate
+      value: 
+      objectReference: {fileID: 11400000, guid: e2468614734fa274da591c36905b3f6e, type: 2}
     - target: {fileID: 7270789378752775283, guid: 8f20fec739342d84a9869d7c810ebcc1, type: 3}
       propertyPath: m_Name
       value: Tunnel Reverse 7
       objectReference: {fileID: 0}
+    - target: {fileID: 7543528363504095886, guid: 8f20fec739342d84a9869d7c810ebcc1, type: 3}
+      propertyPath: id
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7543528363504095886, guid: 8f20fec739342d84a9869d7c810ebcc1, type: 3}
+      propertyPath: gate
+      value: 
+      objectReference: {fileID: 11400000, guid: e2468614734fa274da591c36905b3f6e, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4430,6 +4850,14 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 7051987245443501493, guid: 982f9310d166f9f4eaeb65561ed4b228, type: 3}
+      propertyPath: id
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7051987245443501493, guid: 982f9310d166f9f4eaeb65561ed4b228, type: 3}
+      propertyPath: gate
+      value: 
+      objectReference: {fileID: 11400000, guid: 3db5794054aafe54ebb2769f5c3ab3d8, type: 2}
     - target: {fileID: 7896295001863101256, guid: 982f9310d166f9f4eaeb65561ed4b228, type: 3}
       propertyPath: m_Name
       value: Tunnel 1

@@ -58,6 +58,8 @@ public class VehicleManager : MonoBehaviour
 
     private List<CarParamter> waitingCarList = new List<CarParamter>();
 
+    private Dictionary<int, GateController> gateDict = new Dictionary<int, GateController>();
+
     private ServerMQTTConnection mqttConnection;
 
     private string carFilePath = Application.dataPath + "/_Project/Models/Car_";
@@ -72,6 +74,8 @@ public class VehicleManager : MonoBehaviour
         mqttConnection.AddMessageReceivedCallback(OnMessageReceived);
 
         AddSubscriptionIntersections();
+
+        GetGateDict();
     }
 
     private void AddSubscriptionIntersections()
@@ -80,6 +84,22 @@ public class VehicleManager : MonoBehaviour
         foreach (var intersection in intersections)
         {
             intersection.SubscribeCarEnterIntersection(OnIntersectionEnter);       
+        }
+    }
+
+    private void GetGateDict()
+    {
+        var gateList = FindObjectsOfType<GateController>();
+
+        foreach (var gate in gateList)
+        {
+            if (gateDict.ContainsKey(gate.Gate.Id))
+            {
+                Debug.LogError($"Duplicate gate: {gate.Gate.Id}");
+                continue;
+            }
+
+            gateDict.Add(gate.Gate.Id, gate);
         }
     }
 
@@ -214,10 +234,31 @@ public class VehicleManager : MonoBehaviour
         {
             if (!waitingCarList[i].ready) continue;
 
+            if (!IsGateAvailable(waitingCarList[i].startGate)) continue;
+
             TryCreateCar(waitingCarList[i]);
 
             waitingCarList.RemoveAt(i);
         }
+    }
+
+    private bool IsGateAvailable(int gateId)
+    {
+        var isGateExist = gateDict.TryGetValue(gateId, out GateController gate);
+        if (!isGateExist)
+        {
+            Debug.LogError($"Gate {gateId} doesn't exist.");
+            return isGateExist;
+        }
+
+        if (gate.IsSlotAvailable)
+        {
+            gate.OccupySlot();
+            return true;
+        }
+
+
+        return gate.IsSlotAvailable;
     }
 
     private void TryCreateCar(CarParamter carParameter)
