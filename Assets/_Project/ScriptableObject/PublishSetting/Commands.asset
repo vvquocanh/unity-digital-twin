@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Commands
   m_EditorClassIdentifier: 
   setPosition: position
-  changeVelocity: velocity
   setDirection: set_direction
   changeDirection: direction
+  setNextIntersection: intersection
   changeStatus: status

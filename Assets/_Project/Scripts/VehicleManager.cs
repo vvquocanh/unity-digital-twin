@@ -75,6 +75,8 @@ public class VehicleManager : MonoBehaviour
 
         AddSubscriptionIntersections();
 
+        AddSubscriptionEndPoint();
+
         GetGateDict();
     }
 
@@ -84,6 +86,15 @@ public class VehicleManager : MonoBehaviour
         foreach (var intersection in intersections)
         {
             intersection.SubscribeCarEnterIntersection(OnIntersectionEnter);       
+        }
+    }
+
+    private void AddSubscriptionEndPoint()
+    {
+        var endPoints = FindObjectsOfType<EndPoint>();
+        foreach (var endPoint in endPoints)
+        {
+            endPoint.SubscribeOnCarReachTheEnd(OnCarReachTheEnd);
         }
     }
 
@@ -473,5 +484,10 @@ public class VehicleManager : MonoBehaviour
         var nextIntersectionPoint = adjacentIntersectionPoints.Find((point) => point.Direction == direction).IntersectionPoint.Coordination;
         GiveSetNextIntersectionCommand(carId, nextIntersectionPoint);
         GiveChangeDirectionCommand(carId, AngleToVector(newRotation, car.ModelRotationOffset));
+    }
+
+    private void OnCarReachTheEnd(Car car)
+    {
+        GiveChangeStatusCommand(car.Id, CarStatus.Finish);
     }
 }
