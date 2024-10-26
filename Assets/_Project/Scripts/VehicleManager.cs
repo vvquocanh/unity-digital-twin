@@ -489,10 +489,15 @@ public class VehicleManager : MonoBehaviour
 
     private void OnCarReachTheEnd(Car car)
     {
-        GiveChangeStatusCommand(car.Id, CarStatus.Finish);
+        int carId = car.Id;
         carList.Remove(car);
-        carDict.Remove(car.Id);
+        carDict.Remove(carId);
 
         Destroy(car.gameObject);
+
+        var filePath = carFilePath + carId + ".glb";
+        File.Delete(filePath);
+
+        GiveChangeStatusCommand(carId, CarStatus.Finish);
     }
 }
