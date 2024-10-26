@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95249c53531d5a8409ccc0d029fbe665, type: 3}
   m_Name: RegistrationSetting
   m_EditorClassIdentifier: 
-  topic: registration
+  topic: registration/#
   qos: 2

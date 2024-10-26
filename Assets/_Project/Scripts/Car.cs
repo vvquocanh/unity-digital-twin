@@ -41,6 +41,14 @@ public class Car : MonoBehaviour
 
     public int EndGate => endGate;
 
+    private bool isAlive;
+
+    public bool IsAlive
+    {
+        get => isAlive;
+        set => isAlive = value;
+    }
+
     private void Start()
     {
         gameObject.layer = LayerMask.NameToLayer("Car");
@@ -60,6 +68,7 @@ public class Car : MonoBehaviour
         this.modelRotationOffset = modelRotationOffset;
         this.startGate = startGate;
         this.endGate = endGate;
+        isAlive = true;
         transform.position = new Vector3(position.x, 0.2f, position.y);
         transform.eulerAngles = new Vector3(0, directionAngle, 0);
     }

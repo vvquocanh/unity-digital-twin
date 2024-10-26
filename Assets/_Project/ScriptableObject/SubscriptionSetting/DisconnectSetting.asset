@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 95249c53531d5a8409ccc0d029fbe665, type: 3}
-  m_Name: PositionSetting
+  m_Name: DisconnectSetting
   m_EditorClassIdentifier: 
-  topic: position/#
-  qos: 0
+  topic: disconnect
+  qos: 2

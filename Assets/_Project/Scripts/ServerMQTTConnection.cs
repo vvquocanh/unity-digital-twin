@@ -39,7 +39,7 @@ public class ServerMQTTConnection : MonoBehaviour
     {
         foreach (var setting in subscriptionSettings)
         {
-            topicList.Add(string.Concat(setting.Topic, "/#"));
+            topicList.Add(setting.Topic);
             qosList.Add(setting.Qos);
         }
     }

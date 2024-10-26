@@ -10,6 +10,8 @@ using uPLibrary.Networking.M2Mqtt.Messages;
 using Random = UnityEngine.Random;
 using Direction = Intersection.Direction;
 using static Intersection;
+using UnityEditor;
+using System.Runtime.ConstrainedExecution;
 
 [RequireComponent(typeof(ServerMQTTConnection))]
 public class VehicleManager : MonoBehaviour
@@ -30,7 +32,7 @@ public class VehicleManager : MonoBehaviour
         public int endGate;
         public bool ready;
 
-        public CarParamter (int id)
+        public CarParamter(int id)
         {
             this.id = id;
             modelRotationOffset = 0;
@@ -48,13 +50,15 @@ public class VehicleManager : MonoBehaviour
 
     [SerializeField] private MQTTSubscriptionSetting positionSubscriptionSetting;
 
+    [SerializeField] private MQTTSubscriptionSetting disconnectSubscriptionSetting;
+
     [SerializeField] private MapSetting mapSetting;
 
     private Dictionary<int, MemoryStream> memoryStreamDict = new Dictionary<int, MemoryStream>();
 
     private Dictionary<int, Car> carDict = new Dictionary<int, Car>();
 
-    private List<Car> carList = new List<Car>() ;
+    private List<Car> carList = new List<Car>();
 
     private List<CarParamter> waitingCarList = new List<CarParamter>();
 
@@ -85,7 +89,7 @@ public class VehicleManager : MonoBehaviour
         var intersections = FindObjectsOfType<Intersection>();
         foreach (var intersection in intersections)
         {
-            intersection.SubscribeCarEnterIntersection(OnIntersectionEnter);       
+            intersection.SubscribeCarEnterIntersection(OnIntersectionEnter);
         }
     }
 
@@ -116,11 +120,25 @@ public class VehicleManager : MonoBehaviour
 
     private void OnMessageReceived(object sender, MqttMsgPublishEventArgs message)
     {
+        if (message.Topic == disconnectSubscriptionSetting.Topic)
+        {
+            ProcessDisconnect(message.Message);
+            return;
+        }
+
         ProcessTopic(message.Topic, out var preTopic, out var postTopic);
 
-        if (preTopic == registrationSubscriptionSetting.Topic) ProcessSubscription(postTopic, message.Message);
+        if (registrationSubscriptionSetting.Topic.StartsWith(preTopic)) ProcessSubscription(postTopic, message.Message);
 
-        if (preTopic == positionSubscriptionSetting.Topic) ProcessPosition(postTopic, message.Message);
+        if (positionSubscriptionSetting.Topic.StartsWith(preTopic)) ProcessPosition(postTopic, message.Message);
+    }
+
+    private void ProcessDisconnect(byte[] message)
+    {
+        int carId = int.Parse(Encoding.UTF8.GetString(message));
+        var isCarExist = carDict.TryGetValue(carId, out var car);
+        if (isCarExist) car.IsAlive = false;
+        else ClearWaitingData(carId);
     }
 
     private void ProcessTopic(string topic, out string preTopic, out string postTopic)
@@ -230,9 +248,16 @@ public class VehicleManager : MonoBehaviour
 
     private void UpdateCar()
     {
-        foreach (var car in carList)
+        for (int i = carList.Count - 1; i >= 0; i--)
         {
-            car.UpdateCarData();
+            if (carList[i].IsAlive)
+            {
+                carList[i].UpdateCarData();
+                continue;
+            }
+
+            OnCarDisconnect(carList[i]);
+            carList.RemoveAt(i);
         }
     }
 
@@ -488,15 +513,35 @@ public class VehicleManager : MonoBehaviour
 
     private void OnCarReachTheEnd(Car car)
     {
-        int carId = car.Id;
         carList.Remove(car);
-        carDict.Remove(carId);
+        carDict.Remove(car.Id);
 
         Destroy(car.gameObject);
 
-        var filePath = carFilePath + carId + ".glb";
-        File.Delete(filePath);
+        var filePath = carFilePath + car.Id + ".glb";
+        if (File.Exists(filePath)) File.Delete(filePath);
 
-        GiveChangeStatusCommand(carId, CarStatus.Finish);
+        GiveChangeStatusCommand(car.Id, CarStatus.Finish);
+    }
+
+    private void OnCarDisconnect(Car car)
+    {
+        ClearWaitingData(car.Id);
+
+        carDict.Remove(car.Id);
+
+        Destroy(car.gameObject);
+
+        var filePath = carFilePath + car.Id + ".glb";
+        if (File.Exists(filePath)) File.Delete(filePath);
+    }
+
+
+    private void ClearWaitingData(int carId)
+    {
+        if (memoryStreamDict.ContainsKey(carId)) memoryStreamDict.Remove(carId);
+
+        var carParameter = waitingCarList.Find((carParameter) => carParameter.id == carId);
+        if (carParameter != null) waitingCarList.Remove(carParameter);
     }
 }
