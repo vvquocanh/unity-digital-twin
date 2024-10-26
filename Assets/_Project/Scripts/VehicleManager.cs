@@ -464,7 +464,6 @@ public class VehicleManager : MonoBehaviour
 
     private void OnIntersectionEnter(int carId, HashSet<Direction> availableDirections, List<AdjacentIntersectionPoint> adjacentIntersectionPoints)
     {
-        Debug.Log("Give command");
         var isCarExist = carDict.TryGetValue(carId, out var car);
         if (!isCarExist)
         {
@@ -491,5 +490,9 @@ public class VehicleManager : MonoBehaviour
     private void OnCarReachTheEnd(Car car)
     {
         GiveChangeStatusCommand(car.Id, CarStatus.Finish);
+        carList.Remove(car);
+        carDict.Remove(car.Id);
+
+        Destroy(car.gameObject);
     }
 }

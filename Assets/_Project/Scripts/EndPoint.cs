@@ -9,14 +9,13 @@ public class EndPoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        var car = other.GetComponent<Car>();
-        if (car == null)
+        if (!other.TryGetComponent<Car>(out var car))
         {
             Debug.LogError("Fail to get car");
             return;
         }
 
-        if (car.Id != gate.Id)
+        if (car.EndGate != gate.Id)
         {
             Debug.LogError("Car enter the wrong end point.");
             return;
