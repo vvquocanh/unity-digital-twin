@@ -175,7 +175,6 @@ public class VehicleManager : MonoBehaviour
 
         return carParameter;
     }
-
     private void ConstructCarModelFile(int id, byte[] message)
     {
         var filePath = carFilePath + id + ".glb";
