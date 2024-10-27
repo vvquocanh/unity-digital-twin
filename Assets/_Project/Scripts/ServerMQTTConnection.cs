@@ -50,6 +50,10 @@ public class ServerMQTTConnection : MonoBehaviour
 
         if (rc != 0) return;
 
+        mqttClient.MqttMsgPublishReceived += OnPublishReceived;
+
+        mqttClient.ConnectionClosed += OnConnectionClosed;
+
         Subscribe();
     }
 
@@ -66,7 +70,7 @@ public class ServerMQTTConnection : MonoBehaviour
 
     private void Subscribe()
     {
-        mqttClient.MqttMsgPublishReceived += OnPublishReceived;
+        
         var rc = mqttClient.Subscribe(topicList.ToArray(), qosList.ToArray());
         if (rc != 0) return;
         Debug.LogError("Fail to subscribe to the broker.");
@@ -102,5 +106,14 @@ public class ServerMQTTConnection : MonoBehaviour
         if (rc != 0) return;
 
         Debug.LogError($"Fail to publish with topic: {topic}");
+    }
+
+    private void OnConnectionClosed(object sender, EventArgs e)
+    {
+        int rc = ConnectToBroker();
+
+        if (rc != 0) return;
+
+        Subscribe();
     }
 }
