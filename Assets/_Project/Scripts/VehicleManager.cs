@@ -1,5 +1,4 @@
 using GLTFast;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,20 +9,10 @@ using uPLibrary.Networking.M2Mqtt.Messages;
 using Random = UnityEngine.Random;
 using Direction = Intersection.Direction;
 using static Intersection;
-using UnityEditor;
-using System.Runtime.ConstrainedExecution;
 
 [RequireComponent(typeof(ServerMQTTConnection))]
 public class VehicleManager : MonoBehaviour
 {
-    private enum CarStatus
-    {
-        Idle = 0,
-        Running = 1,
-        Waiting = 2,
-        Finish = 3
-    }
-
     private class CarParamter
     {
         public int id;
@@ -102,6 +91,16 @@ public class VehicleManager : MonoBehaviour
         }
     }
 
+    private void AddSubscribeCarBlock()
+    {
+        var collisionCheckingServers = FindObjectsOfType<CollisionCheckingServer>();
+        foreach (var collisionCheckingServer in collisionCheckingServers)
+        {
+            collisionCheckingServer.SubscribeOnCarBlock(OnCarBlock);
+            collisionCheckingServer.SubscribeOnCarUnblock(OnCarUnblock);
+        }
+    }
+
     private void GetGateDict()
     {
         var gateList = FindObjectsOfType<GateController>();
@@ -137,7 +136,7 @@ public class VehicleManager : MonoBehaviour
     {
         int carId = int.Parse(Encoding.UTF8.GetString(message));
         var isCarExist = carDict.TryGetValue(carId, out var car);
-        if (isCarExist) car.IsAlive = false;
+        if (isCarExist) car.isAlive = false;
         else ClearWaitingData(carId);
     }
 
@@ -250,7 +249,7 @@ public class VehicleManager : MonoBehaviour
     {
         for (int i = carList.Count - 1; i >= 0; i--)
         {
-            if (carList[i].IsAlive)
+            if (carList[i].isAlive)
             {
                 carList[i].UpdateCarData();
                 continue;
@@ -306,17 +305,17 @@ public class VehicleManager : MonoBehaviour
             return;
         }
 
-        var newCar = InitCarObject(carParameter, gate.Position, gate.DirectionAngle, carParameter.startGate, carParameter.endGate);
+        var newCar = InitCarObject(carParameter, gate.Position, gate.Direction, carParameter.startGate, carParameter.endGate);
 
         InstantiateCarModel(newCar);
     }
 
-    private Car InitCarObject(CarParamter carParameter, Vector2 position, float directionAngle, int startGate, int endGate)
+    private Car InitCarObject(CarParamter carParameter, Vector2 position, Vector2 direction, int startGate, int endGate)
     {
         var newGameobject = new GameObject($"Car_{carParameter.id}");
 
         var newCar = newGameobject.AddComponent<Car>();
-        newCar.InitializeCar(carParameter.id, carParameter.modelRotationOffset, directionAngle, position, startGate, endGate);
+        newCar.InitializeCar(carParameter.id, carParameter.modelRotationOffset, direction, position, startGate, endGate);
 
         return newCar;
     }
@@ -364,8 +363,8 @@ public class VehicleManager : MonoBehaviour
 
         SetPositionCommand(car.Id, new Vector2(car.transform.position.x, car.transform.position.z));
         GiveSetNextIntersectionCommand(car.Id, gate.AdjacentIntersectionPoint.Coordination);
-        GiveSetDirectionCommand(car.Id, AngleToVector(car.transform.eulerAngles.y, car.ModelRotationOffset));
-        GiveChangeStatusCommand(car.Id, CarStatus.Running);
+        GiveSetDirectionCommand(car.Id, MathSupport.AngleToVector(car.transform.eulerAngles.y, car.ModelRotationOffset));
+        GiveChangeStatusCommand(car, CarStatus.Running);
     }
 
     private void SetPositionCommand(int carId, Vector2 position)
@@ -404,14 +403,16 @@ public class VehicleManager : MonoBehaviour
         mqttConnection.Publish(topic, message, publishSetting.Qos, publishSetting.Retain);
     }
 
-    private void GiveChangeStatusCommand(int carId, CarStatus status)
+    private void GiveChangeStatusCommand(Car car, CarStatus status)
     {
-        string topic = publishSetting.Topic + "/" + commands.ChangeStatus + "/" + carId;
+        string topic = publishSetting.Topic + "/" + commands.ChangeStatus + "/" + car.Id;
 
         int enumInt = (int)status;
         string message = enumInt.ToString();
 
         mqttConnection.Publish(topic, message, publishSetting.Qos, publishSetting.Retain);
+
+        car.status = status;
     }
 
     private void ProcessPosition(string topic, byte[] message)
@@ -449,7 +450,7 @@ public class VehicleManager : MonoBehaviour
         float x = float.Parse(message[..delimiterIndex]);
         float z = float.Parse(message[(delimiterIndex + 1)..]);
 
-        car.Position = new Vector2(x, z);
+        car.position = new Vector2(x, z);
     }
 
     private void SetDirection(Car car, string message)
@@ -458,32 +459,13 @@ public class VehicleManager : MonoBehaviour
         float x = float.Parse(message[..delimiterIndex]);
         float z = float.Parse(message[(delimiterIndex + 1)..]);
 
-        float angle = (float)Math.Round(VectorToAngle(new Vector2(x, z), car.ModelRotationOffset), 1);
-
-        car.DirectionAngle = angle;
+        car.direction = new Vector2(x, z); ;
     }
 
     private void SetVelocity(Car car, string message)
     {
         var velocity = float.Parse(message);
-        car.Velocity = velocity;
-    }
-
-    private Vector2 AngleToVector(float angle, float rotationOffset)
-    {
-        angle += rotationOffset;
-        
-        float x = (float)Math.Round(Mathf.Cos(angle * Mathf.Deg2Rad), 3);
-        float y = (float)Math.Round(Mathf.Sin(-angle * Mathf.Deg2Rad), 3);
-
-        return new Vector2(x, y);
-    }
-
-    private float VectorToAngle(Vector2 vector, float rotationOffset)
-    {
-        float radians = (float)Mathf.Atan2(vector.y, vector.x);
-
-        return -(radians * Mathf.Rad2Deg) - rotationOffset;
+        car.velocity = velocity;
     }
 
     private void OnIntersectionEnter(int carId, HashSet<Direction> availableDirections, List<AdjacentIntersectionPoint> adjacentIntersectionPoints)
@@ -506,9 +488,11 @@ public class VehicleManager : MonoBehaviour
             _ => car.transform.localEulerAngles.y,
         };
         var nextIntersectionPoint = adjacentIntersectionPoints.Find((point) => point.Direction == direction).IntersectionPoint.Coordination;
+        
         GiveSetNextIntersectionCommand(carId, nextIntersectionPoint);
-        GiveChangeDirectionCommand(carId, AngleToVector(newRotation, car.ModelRotationOffset));
-        GiveChangeStatusCommand(carId, CarStatus.Running);
+        GiveChangeDirectionCommand(carId, MathSupport.AngleToVector(newRotation, car.ModelRotationOffset));
+        
+        if (car.status != CarStatus.Blocking) GiveChangeStatusCommand(car, CarStatus.Running);
     }
 
     private void OnCarReachTheEnd(Car car)
@@ -521,7 +505,7 @@ public class VehicleManager : MonoBehaviour
         var filePath = carFilePath + car.Id + ".glb";
         if (File.Exists(filePath)) File.Delete(filePath);
 
-        GiveChangeStatusCommand(car.Id, CarStatus.Finish);
+        GiveChangeStatusCommand(car, CarStatus.Finish);
     }
 
     private void OnCarDisconnect(Car car)
@@ -543,5 +527,43 @@ public class VehicleManager : MonoBehaviour
 
         var carParameter = waitingCarList.Find((carParameter) => carParameter.id == carId);
         if (carParameter != null) waitingCarList.Remove(carParameter);
+    }
+
+    private void OnCarBlock(int carId)
+    {
+        if (!carDict.TryGetValue(carId, out var car)) return;
+
+        GiveChangeStatusCommand(car, CarStatus.Blocking);
+    }
+
+    private void OnCarUnblock(int carId)
+    {
+        if (!carDict.TryGetValue(carId, out var car)) return;
+
+        GiveChangeStatusCommand(car, CarStatus.Running);
+    }
+}
+public enum CarStatus
+{
+    Idle = 0,
+    Running = 1,
+    Waiting = 2,
+    Blocking = 3,
+    Finish = 4
+}
+public struct CollisionSegment
+{
+    private Vector2 tail;
+
+    public Vector2 Tail => tail;
+
+    private Vector3 head;
+
+    public Vector2 Head => head;
+
+    public CollisionSegment(Vector2 head, Vector2 tail)
+    {
+        this.head = head;
+        this.tail = tail;
     }
 }

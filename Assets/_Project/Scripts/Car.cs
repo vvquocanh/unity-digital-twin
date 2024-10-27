@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Car : MonoBehaviour
@@ -6,28 +7,11 @@ public class Car : MonoBehaviour
 
     public int Id => id;
 
-    private float velocity = 0f;
+    public float velocity = 0f;
 
-    public float Velocity
-    {
-        get => velocity;
-        set => velocity = Mathf.Max(0f, value);
-    }
+    public Vector2 direction;
 
-    private float directionAngle;
-
-    public float DirectionAngle
-    {
-        set => directionAngle = value;
-    }
-
-    private Vector2 position;
-
-    public Vector2 Position
-    {
-        get => position;
-        set => position = value;
-    }
+    public Vector2 position;
 
     private float modelRotationOffset;
 
@@ -41,13 +25,11 @@ public class Car : MonoBehaviour
 
     public int EndGate => endGate;
 
-    private bool isAlive;
+    public bool isAlive;
 
-    public bool IsAlive
-    {
-        get => isAlive;
-        set => isAlive = value;
-    }
+    public CarStatus status = CarStatus.Blocking;
+
+    private Renderer carRenderer;
 
     private void Start()
     {
@@ -58,26 +40,43 @@ public class Car : MonoBehaviour
 
         var rigidBody = gameObject.AddComponent<Rigidbody>();
         rigidBody.isKinematic = true;
+
+        carRenderer = GetComponent<Renderer>();
     }
 
-    public void InitializeCar(int id, float modelRotationOffset, float directionAngle, Vector2 position, int startGate, int endGate)
+    public void InitializeCar(int id, float modelRotationOffset, Vector2 direction, Vector2 position, int startGate, int endGate)
     {
         this.id = id;
-        this.directionAngle = directionAngle;
+        this.direction = direction;
         this.position = position;
         this.modelRotationOffset = modelRotationOffset;
         this.startGate = startGate;
         this.endGate = endGate;
         isAlive = true;
         transform.position = new Vector3(position.x, 0.2f, position.y);
-        transform.eulerAngles = new Vector3(0, directionAngle, 0);
+        transform.eulerAngles = new Vector3(0, GetDirectionAngle(), 0);
     }
 
     public void UpdateCarData()
     {
+        float directionAngle = GetDirectionAngle();
         transform.position = new Vector3(position.x, transform.position.y, position.y);
         if (Mathf.Abs(transform.eulerAngles.y - directionAngle) < 0.001f) return;
 
         transform.eulerAngles = new Vector3(transform.eulerAngles.x, directionAngle, transform.eulerAngles.z);
+    }
+
+    public CollisionSegment GetCollisionSegment()
+    {
+        Vector2 head = new Vector2(carRenderer.bounds.max.x, carRenderer.bounds.max.z) * direction;
+
+        Vector2 tail = new Vector2(carRenderer.bounds.min.x, carRenderer.bounds.min.z) * direction;
+
+        return new CollisionSegment(head, tail);
+    }
+
+    private float GetDirectionAngle()
+    {
+        return (float)Math.Round(MathSupport.VectorToAngle(direction, modelRotationOffset), 1);
     }
 }

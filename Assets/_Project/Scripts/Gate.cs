@@ -11,9 +11,9 @@ public class Gate : ScriptableObject
 
     public Vector2 Position => position;
 
-    [SerializeField] private float directionAngle;
+    [SerializeField] private Vector2 direction;
 
-    public float DirectionAngle => directionAngle;
+    public Vector2 Direction => direction;
 
     [SerializeField] private IntersectionPoint adjacentIntersectionPoint;
 
