@@ -38,45 +38,45 @@ public class CollisionCheckingServer : MonoBehaviour
         {
             for (int j = i + 1; j < segments.Count; j++)
             {
-                var isIntersect = MathSupport.IsIntersect(segments[i].Head, segments[i].Tail, segments[j].Head, segments[j].Tail);
-                if (!isIntersect)
-                {
-                    var firstCarRay = new Ray(cars[i].GetEndWorldCenterMax(), new Vector3(cars[i].direction.x, 0.5f, cars[i].direction.y));
-                    var secondCarRay = new Ray(cars[j].GetEndWorldCenterMax(), new Vector3(cars[j].direction.x, 0.5f, cars[j].direction.y));
+                var firstCarRay = new Ray(cars[i].GetEndWorldCenterMax(), new Vector3(cars[i].direction.x, 0.5f, cars[i].direction.y));
+                var secondCarRay = new Ray(cars[j].GetEndWorldCenterMax(), new Vector3(cars[j].direction.x, 0.5f, cars[j].direction.y));
 
-                    if (cars[j].IsTouchingCar(firstCarRay, cars[i].GetSafeDistance()))
-                    {
-                        BlockCar(cars[i], cars[j]);
-                        CheckReturn(cars[j], cars[i]);
-                    }
-                    else if (cars[i].IsTouchingCar(secondCarRay, cars[j].GetSafeDistance()))
-                    {
-                        BlockCar(cars[j], cars[i]);
-                        CheckReturn(cars[i], cars[j]);
-                    }
-                    else
-                    {
-                        CheckReturn(cars[i], cars[j]);
-                        CheckReturn(cars[j], cars[i]);
-                    }
+                if (cars[j].IsTouchingCar(firstCarRay, cars[i].GetSafeDistance()))
+                {
+                    BlockCar(cars[i], cars[j]);
+                    CheckReturn(cars[j], cars[i]);
+                }
+                else if (cars[i].IsTouchingCar(secondCarRay, cars[j].GetSafeDistance()))
+                {
+                    BlockCar(cars[j], cars[i]);
+                    CheckReturn(cars[i], cars[j]);
                 }
                 else
                 {
-                    var intersectPoint = MathSupport.GetIntersectionPoint(segments[i].Head, segments[i].Tail, segments[j].Head, segments[j].Tail);
-                    var distanceToFirstCar = Vector2.Distance(intersectPoint, cars[i].GetEndWorldCenterMin());
-                    var distanceToSecondCar = Vector2.Distance(intersectPoint, cars[j].GetEndWorldCenterMin());
-
-                    if (distanceToFirstCar < distanceToSecondCar)
+                    var isIntersect = MathSupport.IsIntersect(segments[i].Head, segments[i].Tail, segments[j].Head, segments[j].Tail);
+                    if (!isIntersect)
                     {
-                        BlockCar(cars[j], cars[i]);
                         CheckReturn(cars[i], cars[j]);
+                        CheckReturn(cars[j], cars[i]);
                     }
                     else
                     {
-                        BlockCar(cars[i], cars[j]);
-                        CheckReturn(cars[j], cars[i]);
+                        var intersectPoint = MathSupport.GetIntersectionPoint(segments[i].Head, segments[i].Tail, segments[j].Head, segments[j].Tail);
+                        var distanceToFirstCar = Vector2.Distance(intersectPoint, cars[i].GetEndWorldCenterMin());
+                        var distanceToSecondCar = Vector2.Distance(intersectPoint, cars[j].GetEndWorldCenterMin());
+
+                        if (distanceToFirstCar < distanceToSecondCar)
+                        {
+                            BlockCar(cars[j], cars[i]);
+                            CheckReturn(cars[i], cars[j]);
+                        }
+                        else
+                        {
+                            BlockCar(cars[i], cars[j]);
+                            CheckReturn(cars[j], cars[i]);
+                        }
                     }
-                }
+                }          
             }
         }
     }
