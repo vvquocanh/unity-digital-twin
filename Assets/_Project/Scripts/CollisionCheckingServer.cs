@@ -19,11 +19,11 @@ public class CollisionCheckingServer : MonoBehaviour
 
     private void CollisionChecking()
     {
-        List<CollisionSegment> segments = new List<CollisionSegment>(cars.Count);
+        List<CollisionSegment> segments = new List<CollisionSegment>();
 
-        for (int i = 0; i < cars.Count; i++)
+        foreach (var car in cars)
         {
-            segments[i] = cars[i].GetCollisionSegment();
+            segments.Add(car.GetCollisionSegment());
         }
 
         for (int i = 0; i < segments.Count; i++)
@@ -38,6 +38,7 @@ public class CollisionCheckingServer : MonoBehaviour
                 }
                 else
                 {
+                    Debug.Log($"2 cars intersect: {cars[i].Id} and {cars[j].Id}");
                     var intersectPoint = MathSupport.GetIntersectionPoint(segments[i].Head, segments[i].Tail, segments[j].Head, segments[j].Tail);
                     var distanceToFirstCar = Vector2.Distance(intersectPoint, new Vector2(cars[i].gameObject.transform.position.x, cars[i].gameObject.transform.position.z));
                     var distanceToSecondCar = Vector2.Distance(intersectPoint, new Vector2(cars[j].gameObject.transform.position.x, cars[i].gameObject.transform.position.z));
@@ -73,6 +74,8 @@ public class CollisionCheckingServer : MonoBehaviour
     private void BlockCar(Car car, int paringCarId)
     {
         if (car.status == CarStatus.Blocking) return;
+
+        if (blockCar.ContainsKey(car.Id)) return;
 
         blockCar.Add(car.Id, paringCarId);
 

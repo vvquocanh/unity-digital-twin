@@ -13,10 +13,6 @@ public class Car : MonoBehaviour
 
     public Vector2 position;
 
-    private float modelRotationOffset;
-
-    public float ModelRotationOffset => modelRotationOffset;
-
     private int startGate;
 
     public int StartGate => startGate;
@@ -29,7 +25,9 @@ public class Car : MonoBehaviour
 
     public CarStatus status = CarStatus.Blocking;
 
-    private Renderer carRenderer;
+    private MeshRenderer carRenderer;
+
+    private float safeTime = 1f;
 
     private void Start()
     {
@@ -40,16 +38,18 @@ public class Car : MonoBehaviour
 
         var rigidBody = gameObject.AddComponent<Rigidbody>();
         rigidBody.isKinematic = true;
-
-        carRenderer = GetComponent<Renderer>();
     }
 
-    public void InitializeCar(int id, float modelRotationOffset, Vector2 direction, Vector2 position, int startGate, int endGate)
+    public void StartLate()
+    {
+        carRenderer = GetComponentInChildren<MeshRenderer>();
+    }
+
+    public void InitializeCar(int id, Vector2 direction, Vector2 position, int startGate, int endGate)
     {
         this.id = id;
         this.direction = direction;
         this.position = position;
-        this.modelRotationOffset = modelRotationOffset;
         this.startGate = startGate;
         this.endGate = endGate;
         isAlive = true;
@@ -68,15 +68,19 @@ public class Car : MonoBehaviour
 
     public CollisionSegment GetCollisionSegment()
     {
-        Vector2 head = new Vector2(carRenderer.bounds.max.x, carRenderer.bounds.max.z) * direction;
 
-        Vector2 tail = new Vector2(carRenderer.bounds.min.x, carRenderer.bounds.min.z) * direction;
+        var localMax = carRenderer.localBounds.max;
+        var localMin = carRenderer.localBounds.min;
 
-        return new CollisionSegment(head, tail);
+        var localCenterZ = (localMax.z + localMin.z) / 2;
+        var localCenterMax = new Vector2(carRenderer.localBounds.max.x + velocity * safeTime, localCenterZ);
+        var localCenterMin = new Vector2(carRenderer.localBounds.min.x, localCenterZ);
+
+        return new CollisionSegment(transform.TransformPoint(localCenterMax), transform.TransformPoint(localCenterMin));
     }
 
     private float GetDirectionAngle()
     {
-        return (float)Math.Round(MathSupport.VectorToAngle(direction, modelRotationOffset), 1);
+        return (float)Math.Round(MathSupport.VectorToAngle(direction), 1);
     }
 }

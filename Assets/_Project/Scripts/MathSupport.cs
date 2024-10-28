@@ -58,9 +58,8 @@ public static class MathSupport
         return new Vector2(intersectX, intersectY);
     }
 
-    public static Vector2 AngleToVector(float angle, float rotationOffset)
+    public static Vector2 AngleToVector(float angle)
     {
-        angle += rotationOffset;
 
         float x = (float)Math.Round(Mathf.Cos(angle * Mathf.Deg2Rad), 3);
         float y = (float)Math.Round(Mathf.Sin(-angle * Mathf.Deg2Rad), 3);
@@ -68,10 +67,10 @@ public static class MathSupport
         return new Vector2(x, y);
     }
 
-    public static float VectorToAngle(Vector2 vector, float rotationOffset)
+    public static float VectorToAngle(Vector2 vector)
     {
         float radians = (float)Mathf.Atan2(vector.y, vector.x);
 
-        return -(radians * Mathf.Rad2Deg) - rotationOffset;
+        return -(radians * Mathf.Rad2Deg);
     }
 }

@@ -16,7 +16,6 @@ public class VehicleManager : MonoBehaviour
     private class CarParamter
     {
         public int id;
-        public float modelRotationOffset;
         public int startGate;
         public int endGate;
         public bool ready;
@@ -24,7 +23,6 @@ public class VehicleManager : MonoBehaviour
         public CarParamter(int id)
         {
             this.id = id;
-            modelRotationOffset = 0;
             startGate = 0;
             endGate = 0;
             ready = false;
@@ -69,6 +67,8 @@ public class VehicleManager : MonoBehaviour
         AddSubscriptionIntersections();
 
         AddSubscriptionEndPoint();
+
+        AddSubscribeCarBlock();
 
         GetGateDict();
     }
@@ -162,9 +162,6 @@ public class VehicleManager : MonoBehaviour
             case "model":
                 ConstructCarModelFile(carId, message); 
                 break;
-            case "rotation_offset":
-                SetModelRotationOffset(carParameter, messageString);
-                break;
             case "start_gate":
                 SetStartGate(carParameter, messageString);
                 break;
@@ -212,12 +209,6 @@ public class VehicleManager : MonoBehaviour
             memoryStreamDict.Remove(id);
         }
         else memoryStream.Write(message, 0, message.Length);
-    }
-
-    private void SetModelRotationOffset(CarParamter carParamter, string message) 
-    {
-        var rotationOffset = float.Parse(message);
-        carParamter.modelRotationOffset = rotationOffset;
     }
 
     private void SetStartGate(CarParamter carParamter, string message)
@@ -315,7 +306,7 @@ public class VehicleManager : MonoBehaviour
         var newGameobject = new GameObject($"Car_{carParameter.id}");
 
         var newCar = newGameobject.AddComponent<Car>();
-        newCar.InitializeCar(carParameter.id, carParameter.modelRotationOffset, direction, position, startGate, endGate);
+        newCar.InitializeCar(carParameter.id, direction, position, startGate, endGate);
 
         return newCar;
     }
@@ -332,6 +323,8 @@ public class VehicleManager : MonoBehaviour
         }
 
         if (!await gltf.InstantiateMainSceneAsync(newCar.transform)) Debug.LogError($"Fail to instantiate car instance: {newCar.Id}.");
+
+        newCar.StartLate();
 
         AddCarToManagementData(newCar);
 
@@ -363,7 +356,7 @@ public class VehicleManager : MonoBehaviour
 
         SetPositionCommand(car.Id, new Vector2(car.transform.position.x, car.transform.position.z));
         GiveSetNextIntersectionCommand(car.Id, gate.AdjacentIntersectionPoint.Coordination);
-        GiveSetDirectionCommand(car.Id, MathSupport.AngleToVector(car.transform.eulerAngles.y, car.ModelRotationOffset));
+        GiveSetDirectionCommand(car.Id, MathSupport.AngleToVector(car.transform.eulerAngles.y));
         GiveChangeStatusCommand(car, CarStatus.Running);
     }
 
@@ -405,14 +398,13 @@ public class VehicleManager : MonoBehaviour
 
     private void GiveChangeStatusCommand(Car car, CarStatus status)
     {
+        car.status = status;
         string topic = publishSetting.Topic + "/" + commands.ChangeStatus + "/" + car.Id;
 
         int enumInt = (int)status;
         string message = enumInt.ToString();
 
         mqttConnection.Publish(topic, message, publishSetting.Qos, publishSetting.Retain);
-
-        car.status = status;
     }
 
     private void ProcessPosition(string topic, byte[] message)
@@ -490,7 +482,7 @@ public class VehicleManager : MonoBehaviour
         var nextIntersectionPoint = adjacentIntersectionPoints.Find((point) => point.Direction == direction).IntersectionPoint.Coordination;
         
         GiveSetNextIntersectionCommand(carId, nextIntersectionPoint);
-        GiveChangeDirectionCommand(carId, MathSupport.AngleToVector(newRotation, car.ModelRotationOffset));
+        GiveChangeDirectionCommand(carId, MathSupport.AngleToVector(newRotation));
         
         if (car.status != CarStatus.Blocking) GiveChangeStatusCommand(car, CarStatus.Running);
     }

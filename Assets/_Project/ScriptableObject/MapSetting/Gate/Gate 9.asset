@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 9
   position: {x: -67.5, y: 130}
-  directionAngle: 180
+  direction: {x: 0, y: -1}
   adjacentIntersectionPoint: {fileID: 11400000, guid: 6301a20fc5e75cb4ea9c390ec9dc9ff5, type: 2}
