@@ -27,7 +27,7 @@ public class Car : MonoBehaviour
 
     private MeshRenderer carRenderer;
 
-    private float safeTime = 0.5f;
+    private float safeTime = 0.7f;
 
     public int blockCount = 0;
 
@@ -75,15 +75,18 @@ public class Car : MonoBehaviour
         var localMin = carRenderer.localBounds.min;
 
         var localCenterZ = (localMax.z + localMin.z) / 2;
-        var localCenterMax = new Vector3(carRenderer.localBounds.max.x + velocity * safeTime, 0, localCenterZ);
+        var localCenterMax = new Vector3(carRenderer.localBounds.max.x + GetSafeDistance(), 0, localCenterZ);
         var localCenterMin = new Vector3(carRenderer.localBounds.min.x, 0, localCenterZ);
 
         var worldCenterMax = transform.TransformPoint(localCenterMax);
         var worldCenterMin = transform.TransformPoint(localCenterMin);
 
-        Debug.DrawLine(worldCenterMin, worldCenterMax);
-
         return new CollisionSegment(new Vector2(worldCenterMax.x, worldCenterMax.z), new Vector2(worldCenterMin.x, worldCenterMin.z));
+    }
+
+    public float GetSafeDistance()
+    {
+        return velocity * safeTime;
     }
 
     public Vector2 GetEndWorldCenterMin()
@@ -97,6 +100,30 @@ public class Car : MonoBehaviour
         var worldCenterMin = transform.TransformPoint(localCenterMin);
 
         return new Vector2(worldCenterMin.x, worldCenterMin.z);
+    }
+
+    public Vector3 GetEndWorldCenterMax()
+    {
+        var localMax = carRenderer.localBounds.max;
+        var localMin = carRenderer.localBounds.min;
+
+        var localCenterZ = (localMax.z + localMin.z) / 2;
+
+        var localCenterMax = new Vector3(carRenderer.localBounds.max.x, 0, localCenterZ);
+
+
+        Debug.DrawRay(transform.TransformPoint(localCenterMax), new Vector3(direction.x, 0.5f, direction.y), Color.red);
+
+        return transform.TransformPoint(localCenterMax);
+    }
+
+    public bool IsTouchingCar(Ray ray, float distance)
+    {
+        bool isIntersect = carRenderer.bounds.IntersectRay(ray, out float intersectDistance);
+
+        if (!isIntersect || (isIntersect && intersectDistance > distance)) return false;
+
+        return true;
     }
 
     private float GetDirectionAngle()

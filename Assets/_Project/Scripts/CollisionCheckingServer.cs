@@ -21,6 +21,14 @@ public class CollisionCheckingServer : MonoBehaviour
     {
         List<CollisionSegment> segments = new List<CollisionSegment>();
 
+        for (int i = cars.Count - 1; i >= 0; i--) {
+            if (cars[i] != null) continue;
+
+            if (blockCar.ContainsKey(cars[i].Id)) blockCar.Remove(cars[i].Id);
+
+            cars.RemoveAt(i);
+        }
+
         foreach (var car in cars)
         {
             segments.Add(car.GetCollisionSegment());
@@ -33,8 +41,24 @@ public class CollisionCheckingServer : MonoBehaviour
                 var isIntersect = MathSupport.IsIntersect(segments[i].Head, segments[i].Tail, segments[j].Head, segments[j].Tail);
                 if (!isIntersect)
                 {
-                    CheckReturn(cars[i], cars[j]);
-                    CheckReturn(cars[j], cars[i]);
+                    var firstCarRay = new Ray(cars[i].GetEndWorldCenterMax(), new Vector3(cars[i].direction.x, 0.5f, cars[i].direction.y));
+                    var secondCarRay = new Ray(cars[j].GetEndWorldCenterMax(), new Vector3(cars[j].direction.x, 0.5f, cars[j].direction.y));
+
+                    if (cars[j].IsTouchingCar(firstCarRay, cars[i].GetSafeDistance()))
+                    {
+                        BlockCar(cars[i], cars[j]);
+                        CheckReturn(cars[j], cars[i]);
+                    }
+                    else if (cars[i].IsTouchingCar(secondCarRay, cars[j].GetSafeDistance()))
+                    {
+                        BlockCar(cars[j], cars[i]);
+                        CheckReturn(cars[i], cars[j]);
+                    }
+                    else
+                    {
+                        CheckReturn(cars[i], cars[j]);
+                        CheckReturn(cars[j], cars[i]);
+                    }
                 }
                 else
                 {

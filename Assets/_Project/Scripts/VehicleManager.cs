@@ -494,10 +494,10 @@ public class VehicleManager : MonoBehaviour
 
         Destroy(car.gameObject);
 
+        GiveChangeStatusCommand(car, CarStatus.Finish);
+
         var filePath = carFilePath + car.Id + ".glb";
         if (File.Exists(filePath)) File.Delete(filePath);
-
-        GiveChangeStatusCommand(car, CarStatus.Finish);
     }
 
     private void OnCarDisconnect(Car car)
