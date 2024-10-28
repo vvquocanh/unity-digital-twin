@@ -111,9 +111,6 @@ public class Car : MonoBehaviour
 
         var localCenterMax = new Vector3(carRenderer.localBounds.max.x, 0, localCenterZ);
 
-
-        Debug.DrawRay(transform.TransformPoint(localCenterMax), new Vector3(direction.x, 0.5f, direction.y), Color.red);
-
         return transform.TransformPoint(localCenterMax);
     }
 
