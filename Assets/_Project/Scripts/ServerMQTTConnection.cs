@@ -110,10 +110,10 @@ public class ServerMQTTConnection : MonoBehaviour
 
     private void OnConnectionClosed(object sender, EventArgs e)
     {
-        int rc = ConnectToBroker();
+        //int rc = ConnectToBroker();
 
-        if (rc != 0) return;
+        //if (rc != 0) return;
 
-        Subscribe();
+        //Subscribe();
     }
 }
