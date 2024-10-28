@@ -27,7 +27,9 @@ public class Car : MonoBehaviour
 
     private MeshRenderer carRenderer;
 
-    private float safeTime = 1f;
+    private float safeTime = 0.5f;
+
+    public int blockCount = 0;
 
     private void Start()
     {
@@ -73,10 +75,28 @@ public class Car : MonoBehaviour
         var localMin = carRenderer.localBounds.min;
 
         var localCenterZ = (localMax.z + localMin.z) / 2;
-        var localCenterMax = new Vector2(carRenderer.localBounds.max.x + velocity * safeTime, localCenterZ);
-        var localCenterMin = new Vector2(carRenderer.localBounds.min.x, localCenterZ);
+        var localCenterMax = new Vector3(carRenderer.localBounds.max.x + velocity * safeTime, 0, localCenterZ);
+        var localCenterMin = new Vector3(carRenderer.localBounds.min.x, 0, localCenterZ);
 
-        return new CollisionSegment(transform.TransformPoint(localCenterMax), transform.TransformPoint(localCenterMin));
+        var worldCenterMax = transform.TransformPoint(localCenterMax);
+        var worldCenterMin = transform.TransformPoint(localCenterMin);
+
+        Debug.DrawLine(worldCenterMin, worldCenterMax);
+
+        return new CollisionSegment(new Vector2(worldCenterMax.x, worldCenterMax.z), new Vector2(worldCenterMin.x, worldCenterMin.z));
+    }
+
+    public Vector2 GetEndWorldCenterMin()
+    {
+        var localMax = carRenderer.localBounds.max;
+        var localMin = carRenderer.localBounds.min;
+
+        var localCenterZ = (localMax.z + localMin.z) / 2;
+        var localCenterMin = new Vector3(carRenderer.localBounds.min.x, 0, localCenterZ);
+
+        var worldCenterMin = transform.TransformPoint(localCenterMin);
+
+        return new Vector2(worldCenterMin.x, worldCenterMin.z);
     }
 
     private float GetDirectionAngle()

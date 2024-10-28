@@ -525,6 +525,8 @@ public class VehicleManager : MonoBehaviour
     {
         if (!carDict.TryGetValue(carId, out var car)) return;
 
+        car.blockCount++;
+
         GiveChangeStatusCommand(car, CarStatus.Blocking);
     }
 
@@ -532,7 +534,11 @@ public class VehicleManager : MonoBehaviour
     {
         if (!carDict.TryGetValue(carId, out var car)) return;
 
-        GiveChangeStatusCommand(car, CarStatus.Running);
+        car.blockCount--;
+
+        car.blockCount = Mathf.Max(car.blockCount, 0);
+
+        if (car.blockCount == 0) GiveChangeStatusCommand(car, CarStatus.Running);
     }
 }
 public enum CarStatus

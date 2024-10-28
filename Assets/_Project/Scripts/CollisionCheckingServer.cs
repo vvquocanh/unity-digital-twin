@@ -6,7 +6,7 @@ public class CollisionCheckingServer : MonoBehaviour
 {
     private List<Car> cars = new List<Car>();
 
-    private Dictionary<int, int> blockCar = new Dictionary<int, int>();
+    private Dictionary<int, Car> blockCar = new Dictionary<int, Car>();
 
     private Action<int> onCarBlock;
 
@@ -31,53 +31,54 @@ public class CollisionCheckingServer : MonoBehaviour
             for (int j = i + 1; j < segments.Count; j++)
             {
                 var isIntersect = MathSupport.IsIntersect(segments[i].Head, segments[i].Tail, segments[j].Head, segments[j].Tail);
-                if (isIntersect)
+                if (!isIntersect)
                 {
-                    CheckReturn(cars[i], j);
-                    CheckReturn(cars[j], i);
+                    CheckReturn(cars[i], cars[j]);
+                    CheckReturn(cars[j], cars[i]);
                 }
                 else
                 {
-                    Debug.Log($"2 cars intersect: {cars[i].Id} and {cars[j].Id}");
                     var intersectPoint = MathSupport.GetIntersectionPoint(segments[i].Head, segments[i].Tail, segments[j].Head, segments[j].Tail);
-                    var distanceToFirstCar = Vector2.Distance(intersectPoint, new Vector2(cars[i].gameObject.transform.position.x, cars[i].gameObject.transform.position.z));
-                    var distanceToSecondCar = Vector2.Distance(intersectPoint, new Vector2(cars[j].gameObject.transform.position.x, cars[i].gameObject.transform.position.z));
+                    var distanceToFirstCar = Vector2.Distance(intersectPoint, cars[i].GetEndWorldCenterMin());
+                    var distanceToSecondCar = Vector2.Distance(intersectPoint, cars[j].GetEndWorldCenterMin());
 
                     if (distanceToFirstCar < distanceToSecondCar)
                     {
-                        BlockCar(cars[j], i);
-                        CheckReturn(cars[i], j);
+                        BlockCar(cars[j], cars[i]);
+                        CheckReturn(cars[i], cars[j]);
                     }
                     else
                     {
-                        BlockCar(cars[i], j);
-                        CheckReturn(cars[j], i);
+                        BlockCar(cars[i], cars[j]);
+                        CheckReturn(cars[j], cars[i]);
                     }
                 }
             }
         }
     }
 
-    private void CheckReturn(Car car, int paringCarId)
+    private void CheckReturn(Car car, Car paringCar)
     {
         if (car.status != CarStatus.Blocking) return;
 
-        var isCarInBlocking = blockCar.TryGetValue(car.Id, out int obstacleCar);
+        var isCarInBlocking = blockCar.TryGetValue(car.Id, out var blockingCar);
 
         if (!isCarInBlocking) return;
 
-        if (paringCarId != obstacleCar) return;
+        if (paringCar != blockingCar) return;
 
         onCarUnblock?.Invoke(car.Id);
+
+        blockCar.Remove(car.Id);
     }
 
-    private void BlockCar(Car car, int paringCarId)
+    private void BlockCar(Car car, Car paringCar)
     {
         if (car.status == CarStatus.Blocking) return;
 
         if (blockCar.ContainsKey(car.Id)) return;
 
-        blockCar.Add(car.Id, paringCarId);
+        blockCar.Add(car.Id, paringCar);
 
         onCarBlock?.Invoke(car.Id);
     }
@@ -91,9 +92,23 @@ public class CollisionCheckingServer : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (!other.TryGetComponent<Car>(out var car)) return;
+        if (!other.TryGetComponent<Car>(out var exitCar)) return;
 
-        cars.Remove(car);
+        cars.Remove(exitCar);
+
+        foreach (var car in cars)
+        {
+            if (!blockCar.ContainsKey(car.Id)) continue;
+
+            var blockingCar = blockCar[car.Id];
+
+            if (exitCar == blockingCar)
+            {
+                onCarUnblock?.Invoke(car.Id);
+
+                blockCar.Remove(car.Id);
+            } 
+        }
     }
 
     public void SubscribeOnCarBlock(Action<int> onCarBlock)
