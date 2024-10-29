@@ -3867,7 +3867,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4053940870811695490, guid: 982f9310d166f9f4eaeb65561ed4b228, type: 3}
       propertyPath: m_text
-      value: 6
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4336573743453527374, guid: 982f9310d166f9f4eaeb65561ed4b228, type: 3}
       propertyPath: gate
