@@ -12,25 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ec9abc58f64c3f46922034afb0cc3d2, type: 3}
   m_Name: CameraConfig
   m_EditorClassIdentifier: 
-  cameraDraggingSpeed: 30
-  cameraDraggingSmooth: 0.5
-  cameraFreeMoveSpeed: 10
+  cameraDraggingSpeed: 7
+  cameraDraggingSmooth: 0.7
+  cameraFreeMoveSpeed: 5
   cameraFreeMoveSmooth: 0.7
   xBounder:
     minOrthographicSizeBounder:
-      min: 0
-      max: 0
+      min: -200
+      max: 33
     maxOrthographicSizeBounder:
-      min: 0
-      max: 0
+      min: -140
+      max: -20
   zBounder:
     minOrthographicSizeBounder:
-      min: 0
-      max: 0
+      min: -200
+      max: 33
     maxOrthographicSizeBounder:
-      min: 0
-      max: 0
-  zoomSpeed: 300
+      min: -140
+      max: -20
+  zoomSpeed: 500
   zoomDraggingSmooth: 0.2
   hardMinOrthographicSize: 6
   hardMaxOrthographicSize: 40
