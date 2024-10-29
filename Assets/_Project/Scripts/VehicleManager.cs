@@ -536,7 +536,11 @@ public class VehicleManager : MonoBehaviour
 
         car.blockCount = Mathf.Max(car.blockCount, 0);
 
-        if (car.blockCount == 0) GiveChangeStatusCommand(car, CarStatus.Running);
+        if (car.blockCount <= 0)
+        {
+            car.blockCount = 0;
+            GiveChangeStatusCommand(car, CarStatus.Running);
+        }
     }
 
     private string GetCarFilePath(int carId)
