@@ -53,8 +53,6 @@ public class VehicleManager : MonoBehaviour
 
     private ServerMQTTConnection mqttConnection;
 
-    private string carFilePath = Application.dataPath + "/_Project/Models/Car_";
-
     private void Awake()
     {
         mqttConnection = GetComponent<ServerMQTTConnection>();
@@ -191,7 +189,7 @@ public class VehicleManager : MonoBehaviour
     }
     private void ConstructCarModelFile(int id, byte[] message)
     {
-        var filePath = carFilePath + id + ".glb";
+        var filePath = GetCarFilePath(id);
 
         if (!memoryStreamDict.ContainsKey(id)) memoryStreamDict.Add(id, new MemoryStream());
 
@@ -313,7 +311,7 @@ public class VehicleManager : MonoBehaviour
 
     private async void InstantiateCarModel(Car newCar)
     {
-        var filePath = carFilePath + newCar.Id + ".glb";
+        var filePath = GetCarFilePath(newCar.Id);
         var gltf = new GltfImport();
 
         if (!await gltf.Load(filePath))
@@ -496,7 +494,7 @@ public class VehicleManager : MonoBehaviour
 
         GiveChangeStatusCommand(car, CarStatus.Finish);
 
-        var filePath = carFilePath + car.Id + ".glb";
+        var filePath = GetCarFilePath(car.Id);
         if (File.Exists(filePath)) File.Delete(filePath);
     }
 
@@ -508,7 +506,7 @@ public class VehicleManager : MonoBehaviour
 
         Destroy(car.gameObject);
 
-        var filePath = carFilePath + car.Id + ".glb";
+        var filePath = GetCarFilePath(car.Id);
         if (File.Exists(filePath)) File.Delete(filePath);
     }
 
@@ -539,6 +537,24 @@ public class VehicleManager : MonoBehaviour
         car.blockCount = Mathf.Max(car.blockCount, 0);
 
         if (car.blockCount == 0) GiveChangeStatusCommand(car, CarStatus.Running);
+    }
+
+    private string GetCarFilePath(int carId)
+    {
+#if UNITY_EDITOR
+        string carFilePath = Application.dataPath + "/_Project/Models/Car_";
+
+        return carFilePath + carId + ".glb";
+
+#else
+        string carFilePath = Application.dataPath + "/Models";
+
+        if (!Directory.Exists(carFilePath)) Directory.CreateDirectory(carFilePath);
+
+        carFilePath += "/Car_" + carId + ".glb";
+
+        return carFilePath;
+#endif
     }
 }
 public enum CarStatus
